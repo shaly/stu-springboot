@@ -34,7 +34,7 @@ public class IndexController {
 
 	@RequestMapping("/toIndexPage")
 	public String toIndexPage() {
-		logger.trace("{} 日志...{}","trace","哈哈");
+		logger.trace("{} 日志...{}","trace","嘿嘿");
 		logger.debug("debug 日志...");
 		logger.info("info 日志...");
 		logger.warn("warn 日志...");
