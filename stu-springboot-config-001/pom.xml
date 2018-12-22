@@ -25,6 +25,16 @@
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-starter-freemarker</artifactId>
 		</dependency>
+		<!-- 日志依赖 
+		其实spring-boot-starter-logging默认是已经被依赖的，可以不用在pom.xml中再引用
+		级别：TRACE,DEBUG,INFO,WARN,ERROR,FATAL,OFF
+		-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-logging</artifactId>
+		</dependency>
+		
+		
       <!-- 热部署 -->
       <dependency>
       	<groupId>org.springframework</groupId>
