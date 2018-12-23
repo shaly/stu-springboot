@@ -1,0 +1,127 @@
+
+************************************** 普通树节点 **************************************
+##新建表
+
+SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for category
+-- ----------------------------
+DROP TABLE IF EXISTS `category`;
+CREATE TABLE `category` (
+  `CATEGORY_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `NAME` varchar(20) NOT NULL,
+  `PARENT_ID` int(11) DEFAULT '0',
+  PRIMARY KEY (`CATEGORY_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of category
+-- ----------------------------
+INSERT INTO `category` VALUES ('1', '家用家电', '0');
+INSERT INTO `category` VALUES ('2', '电脑办公', '0');
+INSERT INTO `category` VALUES ('3', '服装', '0');
+INSERT INTO `category` VALUES ('4', '美妆', '0');
+INSERT INTO `category` VALUES ('5', '电视', '1');
+INSERT INTO `category` VALUES ('6', '空调', '1');
+INSERT INTO `category` VALUES ('7', '电冰箱', '1');
+INSERT INTO `category` VALUES ('8', '曲面电视机', '5');
+INSERT INTO `category` VALUES ('9', '超薄电视机', '5');
+INSERT INTO `category` VALUES ('10', '女装', '3');
+INSERT INTO `category` VALUES ('11', '男装', '3');
+INSERT INTO `category` VALUES ('12', '面部护肤', '4');
+
+select * from CATEGORY;
+#根节点
+select * from CATEGORY where parent_id=0;
+#第二节点
+select * from CATEGORY where parent_id=1;
+#查询所有子节点,有点像in ,但性能比in高
+select * from CATEGORY where FIND_IN_SET(parent_id,"1,5");
+#递归临界点
+
+#函数
+drop function if exists getChildrenNodes;
+#查询子集组织信息
+create function getChildrenNodes(rootId int)
+RETURNs varchar(1000) READS SQL DATA
+BEGIN
+	DECLARE sTemp VARCHAR(1000);
+	DECLARE sTempChd VARCHAR(1000);
+	SET sTemp="$";
+	SET sTempChd=cast(rootId as CHAR);
+	WHILE sTempChd !=0 DO
+		SET sTemp=concat(sTemp,',',sTempChd);
+		SELECT group_concat(category_id) INTO sTempChd FROM category WHERE FIND_IN_SET(parent_id,sTempChd)>0;
+	END WHILE;
+	RETURN sTemp;
+END;
+
+select getChildrenNodes(1);
+select * from category where FIND_IN_SET(category_id	,getChildrenNodes(1))
+
+#查询子集以及数量数量函数
+SELECT p.*,count(1) 
+from category p,
+(select * from category where FIND_IN_SET(category_id	,getChildrenNodes(1))
+) c
+where p.category_id=c.parent_id
+group by p.category_id
+************************************** 检索节点(串联) **************************************
+create table nested_category(
+	category_id int auto_increment PRIMARY key,
+	name varchar(20) not null,
+	lft int not null,
+	rgt int not null
+
+);
+
+insert into nested_category values
+(1,'ELECTRONNICS',1,20),
+(2,'TELEVISIONS',2,9),
+(3,'TUBE',3,4),
+(4,'LCD',5,6),
+(5,'PLASMA',7,8),
+(6,'PORTABLE ELECTRONICS',10,19),
+(7,'MP3 PLAYERS',11,14),
+(8,'FLASH',12,13),
+(9,'CD PLAYERS',15,16),
+(10,'2 WAY RADIOS',17,19);
+#数据结构为：检索节点图.png中
+######查询######
+select * from nested_category;
+#查询ELECTRONNICS下的所有子节点
+select node.name
+from 
+nested_category as node,
+nested_category as parent
+where node.lft between parent.lft and parent.rgt
+and parent.name='ELECTRONNICS'
+ORDER BY node.lft;
+
+#检索节点的深度
+SELECT node.name,(COUNT(parent.name)-1) as depth
+from nested_category as node,
+nested_category as parent
+where node.lft BETWEEN parent.lft and parent.rgt
+GROUP BY node.name
+ORDER by node.lft;
+
+######新增######
+#新增一个节点，因为有多步骤，最好定一个存储过程
+#【在某节点后面加】
+LOCK TABLE nested_category WRITE;
+#先把大于改节点的左右位置都加2
+SELECT @myRight := rgt from nested_category where name='TELEVISIONS';
+UPDATE nested_category SET rgt=rgt+2 where rgt>@myRight;
+UPDATE nested_category SET lft=lft+2 where lft>@myRight;
+#将数据存储到指定位置
+INSERT into nested_category (name,lft,rgt) values('GAME CONSOLES',@myRight+1,@myRight+2);
+UNLOCK TABLES;
+#【往某节点里添加子节点】
+LOCK TABLE nested_category WRITE;
+SELECT @myLeft := lft from nested_category where name='2 WAY RADIOS';
+UPDATE nested_category SET rgt=rgt+2 where rgt>@myLeft;
+UPDATE nested_category SET lft=lft+2 where lft>@myLeft;
+INSERT into nested_category (name,lft,rgt) values('FRS',@myLeft+1,@myLeft+2);
+UNLOCK TABLES;
