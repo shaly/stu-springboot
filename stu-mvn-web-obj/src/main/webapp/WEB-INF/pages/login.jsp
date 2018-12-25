@@ -69,8 +69,10 @@
 						
 						<script src="resources/js/jquery1.12.4.js"></script>
 						<script>
-						
+							
 							$(function(){
+								//点击登录js
+								//请求方式1
 								$("#loginbtn").on("click",function(){
 									var account = $("#account").val();
 									var password = $("#password").val();
@@ -92,7 +94,7 @@
 									});
 									
 									
-									
+									//请求方式2
 								/* 	$.ajax({
 										type:"post",
 										data:params,
