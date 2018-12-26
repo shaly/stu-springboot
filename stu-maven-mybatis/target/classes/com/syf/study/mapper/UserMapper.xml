@@ -18,4 +18,16 @@
 	VALUES (#{name},#{age}, #{birthday}, #{createTime}, #{updateTime}, #{createBy},#{updateBy})
 	</insert>
 	
+	<update id="updateUser" parameterType="com.syf.study.bean.User" >
+	update USER set name=#{name},age=#{age},birthday=#{birthday} where id=#{id}
+	
+	</update>
+	<!-- 两种参数形式
+	1.取名
+	2.索引0第一个，1第二个，2第三个...
+	 -->
+	<delete id="deleteUser" parameterType="java.lang.Integer">
+		<!-- delete from  user where id=#{id} -->
+		delete from  user where id=#{0}
+	</delete>
 </mapper>

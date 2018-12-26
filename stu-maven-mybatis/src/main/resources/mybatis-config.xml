@@ -1,7 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-
+	<!-- 配置属性顺序
+	  //issue #117 read properties first
+	      propertiesElement(root.evalNode("properties"));
+	      Properties settings = settingsAsProperties(root.evalNode("settings"));
+	      loadCustomVfs(settings);
+	      typeAliasesElement(root.evalNode("typeAliases"));
+	      pluginElement(root.evalNode("plugins"));
+	      objectFactoryElement(root.evalNode("objectFactory"));
+	      objectWrapperFactoryElement(root.evalNode("objectWrapperFactory"));
+	      reflectorFactoryElement(root.evalNode("reflectorFactory"));
+	      settingsElement(settings);
+	      // read it after objectFactory and objectWrapperFactory issue #631
+	      environmentsElement(root.evalNode("environments"));
+	      databaseIdProviderElement(root.evalNode("databaseIdProvider"));
+	      typeHandlerElement(root.evalNode("typeHandlers"));
+	      mapperElement(root.evalNode("mappers"));
+	
+	 -->
 	<!-- 配置日志管理 -->
 	<settings>
 		<setting name="logImpl" value="LOG4J"/>
