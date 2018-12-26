@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace是命名空间，必须保证唯一性 -->
+<mapper namespace="sdfsdf">
+	<update id="updateTestUser" parameterType="com.syf.study.bean.TestUser">
+		UPDATE test_user SET  name=#{name}, age=#{age}, sex=#{sex}, birthday=#{birthday}, class=#{classes} WHERE id=#{id}
+	</update>
+</mapper>

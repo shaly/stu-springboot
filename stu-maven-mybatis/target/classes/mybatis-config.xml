@@ -23,6 +23,7 @@
 	<!-- 注册mapper文件 -->
 	<mappers>
 		<mapper class="com.syf.study.mapper.UserMapper"/>
+		<mapper resource="com/syf/study/mapper/TestUserMapper.xml"/>
 	</mappers>
 
 </configuration>

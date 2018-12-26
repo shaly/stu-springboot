@@ -6,4 +6,6 @@ import com.syf.study.bean.User;
 
 public interface UserMapper {
 	List<User> queryAll();
+	
+	int addUser(User user);
 }
