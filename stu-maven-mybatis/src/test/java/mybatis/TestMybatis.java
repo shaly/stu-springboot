@@ -9,6 +9,7 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,6 +18,9 @@ import com.syf.study.bean.User;
 import com.syf.study.mapper.UserMapper;
 
 public class TestMybatis {
+	
+	private Logger logger=Logger.getLogger(TestMybatis.class);
+	
 	private SqlSession session ;
 
 	@Before
@@ -42,7 +46,7 @@ public class TestMybatis {
 		//5.获取代理mapper对象，执行业务
 		List<User> users = mapper.queryAll();
 		for (int i = 0; i < users.size(); i++) {
-			System.out.println(users.get(i).toString());
+			logger.debug(users.get(i).toString());
 		}
 		
 	}
