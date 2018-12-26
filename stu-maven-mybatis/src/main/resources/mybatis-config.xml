@@ -20,8 +20,10 @@
 		</environment>
 	</environments>
 	
-	
-	
+	<!-- 注册mapper文件 -->
+	<mappers>
+		<mapper class="com.syf.study.mapper.UserMapper"/>
+	</mappers>
 
 </configuration>
 
