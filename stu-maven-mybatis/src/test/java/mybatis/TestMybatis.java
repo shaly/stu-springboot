@@ -63,7 +63,7 @@ public class TestMybatis {
 		user.setCreateBy(1234567890);
 		user.setUpdateBy(9876543);
 		user.setUpdateTime(new Date());
-		int count = session.update("com.syf.study.mapper.UserMapper.addUser",user);
+		int count = session.update("com.syf.study.mapper.UserMapper.addUser",user);//新增修改删除都用update
 		session.commit();
 		logger.info("受影响行数:"+count);
 		logger.info("返回ID为:"+user.getId());
@@ -81,7 +81,7 @@ public class TestMybatis {
 		user.setSex("1");
 		user.setClasses("227班");
 		user.setId(1000000001);
-		int count = session.update("sdfsdf.updateTestUser",user);
+		int count = session.update("sdfsdf.updateTestUser",user);//新增修改删除都用update
 		session.commit();
 		logger.info("修改影响行数:"+count);
 		System.out.println("修改影响行数:"+count);
