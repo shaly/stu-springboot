@@ -44,16 +44,6 @@
 	<!-- 配置数据源 -->
 	<environments default="mysql"><!-- 设置默认使用的数据库，虽然配置多个，但只使用一个 -->
 		<environment id="mysql">
-			<!-- 指定事务的类型，简单实用JDBC的提交和回滚设置 -->
-			<transactionManager type="JDBC"></transactionManager>
-			<dataSource type="POOLED">
-				<property name="driver" value="${driver}"/>
-				<property name="url" value="${url}"/>
-				<property name="username" value="${username}"/>
-				<property name="password" value="${password}"/>
-			</dataSource>
-		</environment>
-		<environment id="mysql1">
 			<!-- 指定事务的类型，简单实用JDBC的提交和回滚设置 JDBC  MANAGE-->
 			<transactionManager type="JDBC"></transactionManager>
 			<!-- 
@@ -61,6 +51,19 @@
 				<property name="closeConnection" value="false"/>
 			</transactionManager> -->
 			
+			<!-- 默认数据库连接池 -->
+			<!-- <dataSource type="POOLED"> -->
+			<!-- 自定义c3p0连接池 -->
+			<dataSource type="com.syf.study.core.C3P0DataSourceFactory">
+				<property name="driver" value="${driver}"/>
+				<property name="url" value="${url}"/>
+				<property name="username" value="${username}"/>
+				<property name="password" value="${password}"/>
+			</dataSource>
+		</environment>
+		<environment id="mysql1">
+			<!-- 指定事务的类型，简单实用JDBC的提交和回滚设置 -->
+			<transactionManager type="JDBC"></transactionManager>
 			<dataSource type="POOLED">
 				<property name="driver" value="${driver1}"/>
 				<property name="url" value="${url1}"/>

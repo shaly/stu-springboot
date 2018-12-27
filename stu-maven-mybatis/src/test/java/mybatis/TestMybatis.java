@@ -47,7 +47,7 @@ public class TestMybatis {
 	public void addUser() {
 		User user=new User();
 		user.setAge(25);
-		user.setName("Jane2");
+		user.setName("12Jane2");
 		user.setBirthday(new Date());
 		user.setCreateTime(new Date());
 		user.setCreateBy(1234567890);
@@ -103,17 +103,17 @@ public class TestMybatis {
 
 	//====================================接口编程
 
-//	@Test
-//	public void test() {
-//		//4.获得mapper对象
-//		UserMapper mapper = session.getMapper(UserMapper.class);
-//		//5.获取代理mapper对象，执行业务
-//		List<User> users = mapper.queryAll();
-//		for (int i = 0; i < users.size(); i++) {
-//			logger.debug(users.get(i).toString());
-//		}
-//		
-//	}
+	@Test
+	public void query() {
+		//4.获得mapper对象
+		UserMapper mapper = session.getMapper(UserMapper.class);
+		//5.获取代理mapper对象，执行业务
+		List<User> users = mapper.queryAll();
+		for (int i = 0; i < users.size(); i++) {
+			logger.debug(users.get(i).toString());
+		}
+		
+	}
 
 
 	@Test
