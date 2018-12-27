@@ -26,6 +26,10 @@
 	<!-- 配置日志管理 -->
 	<settings>
 		<setting name="logImpl" value="LOG4J"/>
+		<!-- 设置所有新增返回主键 -->
+		<setting name="useGeneratedKeys" value="true" />
+		<!-- 延迟加载 -->
+		<setting name="lazyLoadingEnabled" value="true" />
 	</settings>
 	
 	<!-- 别名映射 -->
@@ -33,7 +37,6 @@
 		<!-- <typeAlias type="com.syf.study.bean.User" alias="user"/> -->
 		
 		<package name="com.syf.study.bean"/>
-		
 	</typeAliases>
 	
 	
