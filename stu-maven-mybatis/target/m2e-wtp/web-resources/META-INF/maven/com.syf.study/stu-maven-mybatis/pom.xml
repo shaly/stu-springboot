@@ -32,12 +32,13 @@
       <artifactId>log4j</artifactId>
       <version>1.2.16</version>
     </dependency>
-    
+    <!-- c2p0连接池 -->
     <dependency>
     	<groupId>com.mchange</groupId>
     	<artifactId>c3p0</artifactId>
     	<version>0.9.5.2</version>
     </dependency>
+    <!-- alibaba druid数据库连接池 -->
     <dependency>
     	<groupId>com.alibaba</groupId>
     	<artifactId>druid</artifactId>

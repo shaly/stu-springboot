@@ -44,17 +44,20 @@
 	<!-- 配置数据源 -->
 	<environments default="mysql"><!-- 设置默认使用的数据库，虽然配置多个，但只使用一个 -->
 		<environment id="mysql">
-			<!-- 指定事务的类型，简单实用JDBC的提交和回滚设置 JDBC  MANAGE-->
+			<!-- 指定事务的类型，简单实用JDBC的提交和回滚设置 
+			1.JDBC  
+			2.MANAGE-->
 			<transactionManager type="JDBC"></transactionManager>
-			<!-- 
-			<transactionManager type="MANAGED">
+			<!-- <transactionManager type="MANAGED">
 				<property name="closeConnection" value="false"/>
 			</transactionManager> -->
 			
-			<!-- 默认数据库连接池 -->
+			<!-- 1.mybatis 默认数据库连接池 ，有3种 POOLED-->
 			<!-- <dataSource type="POOLED"> -->
-			<!-- 自定义c3p0连接池 -->
-			<dataSource type="com.syf.study.core.C3P0DataSourceFactory">
+			<!-- 2.自定义c3p0连接池 ,效率比druid低，但稳定性比druid高 -->
+			<!-- <dataSource type="com.syf.study.core.C3P0DataSourceFactory"> -->
+			<!-- 3.自定义alibaba druid连接池 -->
+			<dataSource type="com.syf.study.core.DruidDataSourceFactory">
 				<property name="driver" value="${driver}"/>
 				<property name="url" value="${url}"/>
 				<property name="username" value="${username}"/>
