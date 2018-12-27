@@ -4,10 +4,128 @@
 <mapper namespace="com.syf.study.mapper.UserMapper">
 	
 	
+	<!-- 缓存设置 -->
+<!-- 	<cache></cache> -->
+	<!-- 引入外部的自定缓存类型 -->
+	<!-- <cache-ref namespace=""/> -->
+	<!-- sql片段 -->
+	<!-- <sql id=""></sql> -->
+	<!-- 强大的元素，用来描述如何从数据库集加载对象 -->
+	<!-- <resultMap type="" id=""></resultMap> -->
+	
+	
+	<!--
+	查询属性：
+	1.id
+	2.parameterType
+	3.resultType
+	4.resultMap
+	5.flushCache:默认是false，如果改为true,会导致本地缓存和二级缓存失效，一般不开启
+	6.useCache:默认是true,将本条语句的结果被二级缓存。
+	7.timeout：超时会自动断开，用默认的，不用改，以秒为单位eg:timeout="10"
+	8.fetchSize:依赖底层驱动
+	9.statementType :statemenet[无参数] prepedstatement[可设置参数] calledstatement[执行存储过程，如果是执行存储过程，那么设置statementType="calledstatement"]
+	10.resultSetType
+	11.resultOrdered 当true:有可能引起内存问题，默认false
+	12:resultSets 默认不改
+	13.databaseId:多数据源的时候才使用,以后再讲
+	14.resultTyp:返回类型，一般数据库字段和属性值[不区分大小写]一样的时候用resultType，如果返回的值在类中找不到则会抛异常
+	15.resultMap:如果数据库字段和属性值一致，可以不定义[eg:id->id]，不一致则定义[eg:create_time->createTime]
+	16.flushCache="true":刷新缓存。mybatis默认有缓存机制在一个会话中，如果参数一致多次查询不会进行多次执行，只会执行第一次，后面的直接从缓存中获取数据。如果开启为true则一次会话中即使参数一致也会进行多次查询
+	【### 案例1 ###】		
+		//4.获得mapper对象
+		UserMapper mapper = session.getMapper(UserMapper.class);
+		//5.获取代理mapper对象，执行业务
+		User users = mapper.queryByPrimaryKey(1000000001);
+		logger.info("*****users:"+users.toString());
+		User users1 = mapper.queryByPrimaryKey(1000000001);
+		logger.info("*****users1:"+users1.toString());
+		User users2 = mapper.queryByPrimaryKey(1000000002);
+		logger.info("*****users2:"+users2.toString());
+		User users3 = mapper.queryByPrimaryKey(1000000001);
+		logger.info("*****users3:"+users3.toString()); 
+		【log日志】
+   [====service====] 2018-12-27 23:34:29,267 - com.syf.study.mapper.UserMapper.queryByPrimaryKey -526  [main] DEBUG com.syf.study.mapper.UserMapper.queryByPrimaryKey  - ==>  Preparing: select id,name, age, birthday, createtime, updatetime, createby, updateby from user where id=? 
+   [====service====] 2018-12-27 23:34:29,295 - com.syf.study.mapper.UserMapper.queryByPrimaryKey -554  [main] DEBUG com.syf.study.mapper.UserMapper.queryByPrimaryKey  - ==> Parameters: 1000000001(Integer)
+   [====service====] 2018-12-27 23:34:29,317 - com.syf.study.mapper.UserMapper.queryByPrimaryKey -576  [main] DEBUG com.syf.study.mapper.UserMapper.queryByPrimaryKey  - <==      Total: 1
+   [====service====] 2018-12-27 23:34:29,320 - mybatis.TestMybatis -579  [main] INFO  mybatis.TestMybatis  - *****users:User [id=1000000001, name=1, age=1, birthday=Wed Dec 26 22:32:36 CST 2018, createTime=Mon Dec 10 22:32:18 CST 2018, updateTime=Wed Dec 26 22:32:23 CST 2018, createBy=1, updateBy=1]
+   [====service====] 2018-12-27 23:34:29,320 - mybatis.TestMybatis -579  [main] INFO  mybatis.TestMybatis  - *****users1:User [id=1000000001, name=1, age=1, birthday=Wed Dec 26 22:32:36 CST 2018, createTime=Mon Dec 10 22:32:18 CST 2018, updateTime=Wed Dec 26 22:32:23 CST 2018, createBy=1, updateBy=1]
+   [====service====] 2018-12-27 23:34:29,320 - com.syf.study.mapper.UserMapper.queryByPrimaryKey -579  [main] DEBUG com.syf.study.mapper.UserMapper.queryByPrimaryKey  - ==>  Preparing: select id,name, age, birthday, createtime, updatetime, createby, updateby from user where id=? 
+   [====service====] 2018-12-27 23:34:29,321 - com.syf.study.mapper.UserMapper.queryByPrimaryKey -580  [main] DEBUG com.syf.study.mapper.UserMapper.queryByPrimaryKey  - ==> Parameters: 1000000002(Integer)
+   [====service====] 2018-12-27 23:34:29,322 - com.syf.study.mapper.UserMapper.queryByPrimaryKey -581  [main] DEBUG com.syf.study.mapper.UserMapper.queryByPrimaryKey  - <==      Total: 1
+   [====service====] 2018-12-27 23:34:29,322 - mybatis.TestMybatis -581  [main] INFO  mybatis.TestMybatis  - *****users2:User [id=1000000002, name=2, age=2, birthday=Wed Dec 26 22:33:05 CST 2018, createTime=Thu Dec 27 22:32:57 CST 2018, updateTime=Thu Dec 27 22:33:01 CST 2018, createBy=2, updateBy=2]
+   [====service====] 2018-12-27 23:34:29,322 - mybatis.TestMybatis -581  [main] INFO  mybatis.TestMybatis  - *****users3:User [id=1000000001, name=1, age=1, birthday=Wed Dec 26 22:32:36 CST 2018, createTime=Mon Dec 10 22:32:18 CST 2018, updateTime=Wed Dec 26 22:32:23 CST 2018, createBy=1, updateBy=1]
+	
+	【### 案例2 ###】	
+		//4.获得mapper对象
+		UserMapper mapper = session.getMapper(UserMapper.class);
+		//5.获取代理mapper对象，执行业务
+		User users = mapper.queryByPrimaryKey(1000000001);
+		logger.info("*****users:"+users.toString());
+		User users1 = mapper.queryByPrimaryKey(1000000001);
+		logger.info("*****users1:"+users1.toString());
+
+		logger.info("***** 开始修改 ********");
+		User user=new User();
+		user.setId(1000000001);
+		user.setAge(25);
+		user.setName("缓存测试");
+		user.setBirthday(new Date());
+		user.setCreateTime(new Date());
+		user.setCreateBy(111222333);
+		user.setUpdateBy(333222111);
+		user.setUpdateTime(new Date());
+		int count = session.update("com.syf.study.mapper.UserMapper.updateUser",user);//新增修改删除都用update
+		session.commit();
+		logger.info("修改受影响行数:"+count);
+		logger.info("***** 修改完毕 ********");
+		User users2 = mapper.queryByPrimaryKey(1000000001);
+		logger.info("*****users2:"+users2.toString());
+		User users3 = mapper.queryByPrimaryKey(1000000001);
+		logger.info("*****users3:"+users3.toString());
+		【log日志 commit后就会开启一个新的会话？】
+   [====service====] 2018-12-27 23:38:16,170 - com.syf.study.mapper.UserMapper.queryByPrimaryKey -528  [main] DEBUG com.syf.study.mapper.UserMapper.queryByPrimaryKey  - ==>  Preparing: select id,name, age, birthday, createtime, updatetime, createby, updateby from user where id=? 
+   [====service====] 2018-12-27 23:38:16,198 - com.syf.study.mapper.UserMapper.queryByPrimaryKey -556  [main] DEBUG com.syf.study.mapper.UserMapper.queryByPrimaryKey  - ==> Parameters: 1000000001(Integer)
+   [====service====] 2018-12-27 23:38:16,219 - com.syf.study.mapper.UserMapper.queryByPrimaryKey -577  [main] DEBUG com.syf.study.mapper.UserMapper.queryByPrimaryKey  - <==      Total: 1
+   [====service====] 2018-12-27 23:38:16,223 - mybatis.TestMybatis -581  [main] INFO  mybatis.TestMybatis  - *****users:User [id=1000000001, name=1, age=1, birthday=Wed Dec 26 22:32:36 CST 2018, createTime=Mon Dec 10 22:32:18 CST 2018, updateTime=Wed Dec 26 22:32:23 CST 2018, createBy=1, updateBy=1]
+   [====service====] 2018-12-27 23:38:16,223 - mybatis.TestMybatis -581  [main] INFO  mybatis.TestMybatis  - *****users1:User [id=1000000001, name=1, age=1, birthday=Wed Dec 26 22:32:36 CST 2018, createTime=Mon Dec 10 22:32:18 CST 2018, updateTime=Wed Dec 26 22:32:23 CST 2018, createBy=1, updateBy=1]
+   [====service====] 2018-12-27 23:38:16,223 - mybatis.TestMybatis -581  [main] INFO  mybatis.TestMybatis  - ***** 开始修改 ********
+   [====service====] 2018-12-27 23:38:16,223 - com.syf.study.mapper.UserMapper.updateUser -581  [main] DEBUG com.syf.study.mapper.UserMapper.updateUser  - ==>  Preparing: update USER set name=?,age=?,birthday=? where id=? 
+   [====service====] 2018-12-27 23:38:16,226 - com.syf.study.mapper.UserMapper.updateUser -584  [main] DEBUG com.syf.study.mapper.UserMapper.updateUser  - ==> Parameters: 缓存测试(String), 25(Integer), 2018-12-27 23:38:16.223(Timestamp), 1000000001(Integer)
+   [====service====] 2018-12-27 23:38:16,227 - com.syf.study.mapper.UserMapper.updateUser -585  [main] DEBUG com.syf.study.mapper.UserMapper.updateUser  - <==    Updates: 1
+   [====service====] 2018-12-27 23:38:16,227 - org.apache.ibatis.transaction.jdbc.JdbcTransaction -585  [main] DEBUG org.apache.ibatis.transaction.jdbc.JdbcTransaction  - Committing JDBC Connection [com.mysql.jdbc.JDBC4Connection@50d0686]
+   [====service====] 2018-12-27 23:38:16,232 - mybatis.TestMybatis -590  [main] INFO  mybatis.TestMybatis  - 修改受影响行数:1
+   [====service====] 2018-12-27 23:38:16,232 - mybatis.TestMybatis -590  [main] INFO  mybatis.TestMybatis  - ***** 修改完毕 ********
+   [====service====] 2018-12-27 23:38:16,232 - com.syf.study.mapper.UserMapper.queryByPrimaryKey -590  [main] DEBUG com.syf.study.mapper.UserMapper.queryByPrimaryKey  - ==>  Preparing: select id,name, age, birthday, createtime, updatetime, createby, updateby from user where id=? 
+   [====service====] 2018-12-27 23:38:16,232 - com.syf.study.mapper.UserMapper.queryByPrimaryKey -590  [main] DEBUG com.syf.study.mapper.UserMapper.queryByPrimaryKey  - ==> Parameters: 1000000001(Integer)
+   [====service====] 2018-12-27 23:38:16,234 - com.syf.study.mapper.UserMapper.queryByPrimaryKey -592  [main] DEBUG com.syf.study.mapper.UserMapper.queryByPrimaryKey  - <==      Total: 1
+   [====service====] 2018-12-27 23:38:16,234 - mybatis.TestMybatis -592  [main] INFO  mybatis.TestMybatis  - *****users2:User [id=1000000001, name=缓存测试, age=25, birthday=Thu Dec 27 23:38:16 CST 2018, createTime=Mon Dec 10 22:32:18 CST 2018, updateTime=Wed Dec 26 22:32:23 CST 2018, createBy=1, updateBy=1]
+   [====service====] 2018-12-27 23:38:16,234 - mybatis.TestMybatis -592  [main] INFO  mybatis.TestMybatis  - *****users3:User [id=1000000001, name=缓存测试, age=25, birthday=Thu Dec 27 23:38:16 CST 2018, createTime=Mon Dec 10 22:32:18 CST 2018, updateTime=Wed Dec 26 22:32:23 CST 2018, createBy=1, updateBy=1]
+		-->
 	<select id="queryAll" resultType="User" >
 		select id,name, age, birthday, createtime, updatetime, createby, updateby from user
 	</select>
 	
+	
+	
+	<!-- 
+	参数：
+	1.索引:[参数==1个，并且不是id时推荐使用]  #{0}第一个参数,#{1}第二个参数,#{2}第三个参数,#{3}第四个参数...，老版本可以这样多个取，但是新版本只支持一个参数时用#{0},两个或以上则无法再使用#{1}#{2}此形式获取
+	2.别名:[参数<=4个时，可以考虑使用]  eg:@Param("id") #{id}
+	3.默认搜索id:[默认根据id搜索时推荐使用]  如果你的属性名和数据库表的主键名都是id的话，那么可以不定义别名可以直接使用#{id},只针对ID使用。
+	4.对象或map:[参数>4个时，推荐使用]  parameterType="user" 或 parameterType="java.util.Map" 都用#{}或${}
+	
+	#{}和${}的区别：
+		#{}:java.sql.preparedStatement #{} ===> 'select * from user where id=?' 它是一种安全的参数替换
+	 	${}:是一种字符串的替换，存在sql注入隐患[xss隐患]
+	 -->
+	<select id="queryContent"  resultType="User" parameterType="java.util.Map">
+		select ${col} from ${tab} where ${where1} like ${param1}
+	</select>
+	
+	<select id="queryByPrimaryKey"  resultType="User" >
+		select id,name, age, birthday, createtime, updatetime, createby, updateby from user where id=#{id}
+	</select>
 	
 	<!-- 如果你数据库表的主见是自增长的方式，那么useGeneratedKeys会自动回填id到实体类对象，
 	但是前提是你数据库列名和实体的属性名都为id

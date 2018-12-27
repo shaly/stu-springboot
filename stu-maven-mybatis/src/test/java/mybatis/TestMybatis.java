@@ -4,7 +4,9 @@ package mybatis;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -115,7 +117,56 @@ public class TestMybatis {
 		
 	}
 
+	@Test
+	public void queryByPrimaryKey() {
+		//4.获得mapper对象
+		UserMapper mapper = session.getMapper(UserMapper.class);
+		//5.获取代理mapper对象，执行业务
+		User users = mapper.queryByPrimaryKey(1000000001);
+		logger.info("*****users:"+users.toString());
+		User users1 = mapper.queryByPrimaryKey(1000000001);
+		logger.info("*****users1:"+users1.toString());
 
+		logger.info("***** 开始修改 ********");
+		User user=new User();
+		user.setId(1000000001);
+		user.setAge(25);
+		user.setName("缓存测试");
+		user.setBirthday(new Date());
+		user.setCreateTime(new Date());
+		user.setCreateBy(111222333);
+		user.setUpdateBy(333222111);
+		user.setUpdateTime(new Date());
+		int count = session.update("com.syf.study.mapper.UserMapper.updateUser",user);//新增修改删除都用update
+		session.commit();
+		logger.info("修改受影响行数:"+count);
+		logger.info("***** 修改完毕 ********");
+		User users2 = mapper.queryByPrimaryKey(1000000001);
+		logger.info("*****users2:"+users2.toString());
+		User users3 = mapper.queryByPrimaryKey(1000000001);
+		logger.info("*****users3:"+users3.toString());
+		
+	}
+	
+	
+	//十分不安全！！！！！
+	@Test
+	public void queryContent() {
+		//4.获得mapper对象
+		UserMapper mapper = session.getMapper(UserMapper.class);
+		//5.获取代理mapper对象，执行业务
+		Map<String, String> queryMap=new HashMap<String, String>();
+		queryMap.put("col", "id,name, age, birthday, createtime, updatetime, createby, updateby");
+		queryMap.put("tab", "user");
+		queryMap.put("where1", "name");
+		queryMap.put("param1", "'%tttte%' or 1=1");
+		List<User> listUser = mapper.queryContent(queryMap);
+		for (User user : listUser) {
+			logger.info("*** 返回结果 ***:"+user.toString());
+		}
+		
+	}
+	
 	@Test
 	public void curd() {
 		User user=new User();

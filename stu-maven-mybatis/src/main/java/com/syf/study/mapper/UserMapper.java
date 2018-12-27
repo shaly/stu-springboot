@@ -2,6 +2,7 @@ package com.syf.study.mapper;
 
 import java.util.List;
 
+import java.util.Map;
 import com.syf.study.bean.User;
 
 public interface UserMapper {
@@ -12,4 +13,6 @@ public interface UserMapper {
 	int updateUser(User user);
 	
 	int deleteUser(Integer id);
+	List<User> queryContent(Map<String, String> queryMap);
+	User queryByPrimaryKey(Integer id);
 }

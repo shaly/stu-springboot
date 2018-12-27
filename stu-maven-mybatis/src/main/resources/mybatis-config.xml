@@ -77,6 +77,8 @@
 			</dataSource>
 		</environment>
 	</environments>
+	<!-- 多数据源配置初始化 -->
+	<!-- <databaseIdProvider type=""></databaseIdProvider> -->
 	
 	<!--  ### 注册mapper文件 ###  -->
 	<mappers>
