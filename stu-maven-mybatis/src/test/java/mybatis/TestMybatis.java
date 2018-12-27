@@ -47,7 +47,7 @@ public class TestMybatis {
 	public void addUser() {
 		User user=new User();
 		user.setAge(25);
-		user.setName("Jane");
+		user.setName("Jane2");
 		user.setBirthday(new Date());
 		user.setCreateTime(new Date());
 		user.setCreateBy(1234567890);
