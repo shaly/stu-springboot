@@ -23,6 +23,16 @@
 	<settings>
 		<setting name="logImpl" value="LOG4J"/>
 	</settings>
+	
+	<!-- 别名映射 -->
+	<typeAliases>
+		<!-- <typeAlias type="com.syf.study.bean.User" alias="user"/> -->
+		
+		<package name="com.syf.study.bean"/>
+		
+	</typeAliases>
+	
+	
 	<!-- 配置数据源 -->
 	<environments default="mysql">
 		<environment id="mysql">
@@ -40,10 +50,9 @@
 	<!-- 注册mapper文件 -->
 	<mappers>
 		<!-- 如果用接口去映射话，那么你的xml文件，就必须和接口保持一致 -->
-		<!-- <mapper class="com.syf.study.mapper.UserMapper"/> -->
+		<mapper class="com.syf.study.mapper.UserMapper"/>
 		<!-- 用resource也行，可以直接点 -->
-		<!-- <mapper resource="com/syf/study/mapper/TestUserMapper.xml"/> -->
-		<mapper package="com.syf.study.mapper"/>
+		<mapper resource="com/syf/study/mapper/TestUserMapper.xml"/>
 	</mappers>
 
 </configuration>

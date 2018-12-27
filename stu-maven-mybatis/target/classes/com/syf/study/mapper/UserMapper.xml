@@ -4,7 +4,7 @@
 <mapper namespace="com.syf.study.mapper.UserMapper">
 	
 	
-	<select id="queryAll" resultType="com.syf.study.bean.User">
+	<select id="queryAll" resultType="User">
 		select id,name, age, birthday, createtime, updatetime, createby, updateby from user
 	</select>
 	
@@ -13,12 +13,12 @@
 	但是前提是你数据库列名和实体的属性名都为id
 	如果属性名不一致可以用 keyColumn="id"[数据库字段] keyProperty="id"[类属性]来设置
 	 -->
-	<insert id="addUser" parameterType="com.syf.study.bean.User" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+	<insert id="addUser" parameterType="user" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
 	INSERT INTO USER ( name, age, birthday, createtime, updatetime, createby, updateby) 
 	VALUES (#{name},#{age}, #{birthday}, #{createTime}, #{updateTime}, #{createBy},#{updateBy})
 	</insert>
 	
-	<update id="updateUser" parameterType="com.syf.study.bean.User" >
+	<update id="updateUser" parameterType="user" >
 	update USER set name=#{name},age=#{age},birthday=#{birthday} where id=#{id}
 	
 	</update>

@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- namespace是命名空间，必须保证唯一性 -->
 <mapper namespace="sdfsdf">
-	<update id="updateTestUser" parameterType="com.syf.study.bean.TestUser">
+<!-- tesTuser:别名可以自定义大小写，因为编译时会都转为小写 -->
+	<update id="updateTestUser" parameterType="tesTuser">
 		UPDATE test_user SET  name=#{name}, age=#{age}, sex=#{sex}, birthday=#{birthday}, class=#{classes} WHERE id=#{id}
 	</update>
 </mapper>

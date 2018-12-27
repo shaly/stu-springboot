@@ -92,7 +92,7 @@ public class TestMybatis {
 		user.setName("Jane");
 		user.setBirthday(new Date());
 		user.setSex("1");
-		user.setClasses("227班");
+		user.setClasses("222班");
 		user.setId(1000000001);
 		int count = session.update("sdfsdf.updateTestUser",user);//新增修改删除都用update，不过新增也可以用insert
 		session.commit();
