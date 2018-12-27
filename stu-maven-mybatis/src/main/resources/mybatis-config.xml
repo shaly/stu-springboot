@@ -26,8 +26,8 @@
 	<!-- 配置日志管理 -->
 	<settings>
 		<setting name="logImpl" value="LOG4J"/>
-		<!-- 设置所有新增返回主键 -->
-		<setting name="useGeneratedKeys" value="true" />
+		<!-- 设置所有新增返回主键 ，不建议开启全局-->
+		<!-- <setting name="useGeneratedKeys" value="true" /> -->
 		<!-- 设置延迟加载 -->
 		<setting name="lazyLoadingEnabled" value="true" />
 	</settings>
@@ -39,6 +39,7 @@
 		<package name="com.syf.study.bean"/>
 	</typeAliases>
 	
+	<objectFactory type="com.syf.study.core.MyObjectFactory"></objectFactory>
 	
 	<!-- 配置数据源 -->
 	<environments default="mysql">
