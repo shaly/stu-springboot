@@ -89,10 +89,10 @@ public class TestMybatis {
 	public void updateTestUser() {
 		TestUser user=new TestUser();
 		user.setAge(25);
-		user.setName("Jane");
+		user.setName("你567好");
 		user.setBirthday(new Date());
 		user.setSex("1");
-		user.setClasses("222班");
+		user.setClasses("211班");
 		user.setId(1000000001);
 		int count = session.update("sdfsdf.updateTestUser",user);//新增修改删除都用update，不过新增也可以用insert
 		session.commit();
@@ -120,7 +120,7 @@ public class TestMybatis {
 	public void curd() {
 		User user=new User();
 		user.setAge(26);
-		user.setName("Jane");
+		user.setName("你1好");
 		user.setBirthday(new Date());
 		user.setCreateTime(new Date());
 		user.setCreateBy(1234567890);
@@ -131,7 +131,7 @@ public class TestMybatis {
 		mapper.addUser(user);
 		logger.info("c:"+user.toString());
 		//u
-		user.setName("Jane-update");
+		user.setName("Jane-你好");
 		mapper.updateUser(user);
 		logger.info("u:"+user.toString());
 		//r
@@ -140,9 +140,9 @@ public class TestMybatis {
 			logger.debug("r:"+users.get(i).toString());
 		}
 		//d
-		int deleteUser = mapper.deleteUser(user.getId());
+	//	int deleteUser = mapper.deleteUser(user.getId());
 		session.commit();
-		logger.info("新增受影响行数:"+deleteUser);
+	//	logger.info("新增受影响行数:"+deleteUser);
 	}
 	
 	

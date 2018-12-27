@@ -2,6 +2,9 @@ package com.syf.study.bean;
 
 import java.util.Date;
 
+import org.apache.ibatis.type.Alias;
+@Alias("test__user")//mybatis-config中typeAliases设置别名，
+//加上@Alias将别名设置为"test__user",如果不设置@Alias，对象类别名时默认为类名[不区分大小写]
 public class TestUser {
      private Integer id;
 	 private String name;

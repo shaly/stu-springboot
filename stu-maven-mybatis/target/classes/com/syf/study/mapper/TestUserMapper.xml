@@ -3,7 +3,7 @@
 <!-- namespace是命名空间，必须保证唯一性 -->
 <mapper namespace="sdfsdf">
 <!-- tesTuser:别名可以自定义大小写，因为编译时会都转为小写 -->
-	<update id="updateTestUser" parameterType="tesTuser">
+	<update id="updateTestUser" parameterType="test__user">
 		UPDATE test_user SET  name=#{name}, age=#{age}, sex=#{sex}, birthday=#{birthday}, class=#{classes} WHERE id=#{id}
 	</update>
 </mapper>
