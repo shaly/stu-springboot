@@ -41,18 +41,8 @@ public class TestMybatis {
 		session.close();
 	}
 
-//	@Test
-//	public void test() {
-//		//4.获得mapper对象
-//		UserMapper mapper = session.getMapper(UserMapper.class);
-//		//5.获取代理mapper对象，执行业务
-//		List<User> users = mapper.queryAll();
-//		for (int i = 0; i < users.size(); i++) {
-//			logger.debug(users.get(i).toString());
-//		}
-//		
-//	}
-
+	//====================================底层操作方式
+	
 	@Test
 	public void addUser() {
 		User user=new User();
@@ -94,7 +84,7 @@ public class TestMybatis {
 		logger.info("删除受影响行数:"+count);
 		System.out.println("删除受影响行数:"+count);
 	}
-
+//====================================xml编程
 	@Test
 	public void updateTestUser() {
 		TestUser user=new TestUser();
@@ -110,7 +100,50 @@ public class TestMybatis {
 		System.out.println("修改影响行数:"+count);
 	}
 	
-	
+
+	//====================================接口编程
+
+//	@Test
+//	public void test() {
+//		//4.获得mapper对象
+//		UserMapper mapper = session.getMapper(UserMapper.class);
+//		//5.获取代理mapper对象，执行业务
+//		List<User> users = mapper.queryAll();
+//		for (int i = 0; i < users.size(); i++) {
+//			logger.debug(users.get(i).toString());
+//		}
+//		
+//	}
+
+
+	@Test
+	public void curd() {
+		User user=new User();
+		user.setAge(26);
+		user.setName("Jane");
+		user.setBirthday(new Date());
+		user.setCreateTime(new Date());
+		user.setCreateBy(1234567890);
+		user.setUpdateBy(9876543);
+		user.setUpdateTime(new Date());
+		UserMapper mapper = session.getMapper(UserMapper.class);
+		//c
+		mapper.addUser(user);
+		logger.info("c:"+user.toString());
+		//u
+		user.setName("Jane-update");
+		mapper.updateUser(user);
+		logger.info("u:"+user.toString());
+		//r
+		List<User> users = mapper.queryAll();
+		for (int i = 0; i < users.size(); i++) {
+			logger.debug("r:"+users.get(i).toString());
+		}
+		//d
+		int deleteUser = mapper.deleteUser(user.getId());
+		session.commit();
+		logger.info("新增受影响行数:"+deleteUser);
+	}
 	
 	
 }
