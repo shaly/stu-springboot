@@ -42,7 +42,7 @@
 	<objectFactory type="com.syf.study.core.MyObjectFactory"></objectFactory>
 	
 	<!-- 配置数据源 -->
-	<environments default="mysql">
+	<environments default="mysql"><!-- 设置默认使用的数据库，虽然配置多个，但只使用一个 -->
 		<environment id="mysql">
 			<!-- 指定事务的类型，简单实用JDBC的提交和回滚设置 -->
 			<transactionManager type="JDBC"></transactionManager>
@@ -51,6 +51,23 @@
 				<property name="url" value="${url}"/>
 				<property name="username" value="${username}"/>
 				<property name="password" value="${password}"/>
+			</dataSource>
+		</environment>
+		<environment id="mysql1">
+			<!-- 指定事务的类型，简单实用JDBC的提交和回滚设置 JDBC  MANAGE-->
+			<transactionManager type="JDBC"></transactionManager>
+			<!-- 
+			<transactionManager type="MANAGED">
+				<property name="closeConnection" value="false"/>
+			</transactionManager> -->
+			
+			<dataSource type="POOLED">
+				<property name="driver" value="${driver1}"/>
+				<property name="url" value="${url1}"/>
+				<property name="username" value="${username1}"/>
+				<property name="password" value="${password1}"/>
+				<!-- 修改数据库默认连接属性，默认是10，在org.apache.ibatis.datasource.pooled.PooledDataSource类中设定 -->
+				<property name="poolMaximumActiveConnections" value="20"/>
 			</dataSource>
 		</environment>
 	</environments>
