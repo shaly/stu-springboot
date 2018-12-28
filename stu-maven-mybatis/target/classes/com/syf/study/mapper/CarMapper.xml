@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace是命名空间，必须保证唯一性,如果是用接口编程那么工作空间必须和mapper类路径一致 -->
+<mapper namespace="com.syf.study.mapper.CarMapper">
+	
+	<select id="queryAll1" resultType="com.syf.study.bean.Car" parameterType="com.syf.study.bean.Car">
+		select id,car_name carName,car_type carType,create_date createDate,create_by createBy,status from car
+		WHERE 1=1
+		<if test="id !=null ">
+			AND id=#{id}
+		</if>
+		<if test="carName !=null  and carName !=''">
+			AND car_name=#{carName}
+		</if>
+		<if test="carType !=null  and carType !=''">
+			AND car_type=#{carType}
+		</if>
+		<if test="createDate !=null ">
+			AND create_date=#{createDate}
+		</if>
+		<if test="createBy !=null ">
+			AND create_by=#{createBy}
+		</if>
+		<if test="status !=null ">
+			AND status=#{status}
+		</if>
+	</select>
+	<select id="queryAll2" resultType="com.syf.study.bean.Car" parameterType="com.syf.study.bean.Car">
+		select id,car_name carName,car_type carType,create_date createDate,create_by createBy,status  from car
+		<where><!-- 第一个"if" 连接条件"and"|"or"可加可不加，“where”标签都会自动将其去除，仅仅第一个支持 -->
+			<if test="id !=null ">
+				AND id=#{id}
+			</if>
+			<if test="carName !=null  and carName !=''">
+				AND car_name=#{carName}
+			</if>
+			<if test="carType !=null  and carType !=''">
+				AND car_type=#{carType}
+			</if>
+			<if test="createDate !=null ">
+				AND create_date=#{createDate}
+			</if>
+			<if test="createBy !=null ">
+				AND create_by=#{createBy}
+			</if>
+			<if test="status !=null ">
+				AND status=#{status}
+			</if>
+		</where>
+	</select>
+	<select id="queryAll3" resultType="com.syf.study.bean.Car" parameterType="com.syf.study.bean.Car">
+		select id,car_name carName,car_type carType,create_date createDate,create_by createBy,status  from car
+		<trim prefix="where" prefixOverrides="and|or"><!-- 第一个"if" 连接条件"and"|"or"可加可不加，“where”标签都会自动将其去除，仅仅第一个支持 -->
+			<if test="id !=null ">
+				AND id=#{id}
+			</if>
+			<if test="carName !=null  and carName !=''">
+				AND car_name=#{carName}
+			</if>
+			<if test="carType !=null  and carType !=''">
+				AND car_type=#{carType}
+			</if>
+			<if test="createDate !=null ">
+				AND create_date=#{createDate}
+			</if>
+			<if test="createBy !=null ">
+				AND create_by=#{createBy}
+			</if>
+			<if test="status !=null ">
+				AND status=#{status}
+			</if>
+		</trim>
+	</select>
+	<!-- Choose选择 -->
+	<select id="queryAllChoose" resultType="com.syf.study.bean.Car" parameterType="com.syf.study.bean.Car">
+		select id,car_name carName,car_type carType,create_date createDate,create_by createBy ,status from car
+		<trim prefix="where" prefixOverrides="and|or"><!-- 第一个"if" 连接条件"and"|"or"可加可不加，“where”标签都会自动将其去除，仅仅第一个支持 -->
+			<if test="carName !=null  and carName !=''">
+				AND car_name=#{carName}
+			</if>
+			<if test="carType !=null  and carType !=''">
+				AND car_type=#{carType}
+			</if>
+			<if test="createDate !=null  and createDate !=''">
+				AND create_date=#{createDate}
+			</if>
+			<if test="createBy !=null  and createBy !=''">
+				AND create_by=#{createBy}
+			</if>
+			<choose>
+				<when test="status==1">
+					and status=#{status}
+				</when>
+				<when test="status==0">
+					and status=#{status}
+				</when>
+				<otherwise>
+					and (status=0 or status=1)
+				</otherwise>
+			</choose>
+		</trim>
+	</select>
+	<!-- 工具类判空 -->
+	<select id="queryUtile" resultType="com.syf.study.bean.Car" parameterType="com.syf.study.bean.Car">
+		select id,car_name carName,car_type carType,create_date createDate,create_by createBy ,status from car
+		<trim prefix="where" prefixOverrides="and|or"><!-- 第一个"if" 连接条件"and"|"or"可加可不加，“where”标签都会自动将其去除，仅仅第一个支持 -->
+			<if test="@com.syf.study.util.StringUtils@isNotEmpty(carName)">
+				AND car_name=#{carName}
+			</if>
+		</trim>
+	</select>
+	
+	<update id="update" parameterType="com.syf.study.bean.Car">
+		UPDATE CAR 
+		<set ><!-- 会自动删除最后一个逗号“,” -->
+			<if test="@com.syf.study.util.StringUtils@isNotEmpty(carName)">
+				car_name=#{carName},
+			</if>
+			<if test="@com.syf.study.util.StringUtils@isNotEmpty(carType)">
+				car_type=#{carType},
+			</if>
+		</set>
+		<where>
+			<if test="@com.syf.study.util.StringUtils@isNotEmp(id)">
+				id=${id}
+			</if>
+		</where>
+	</update>
+	<select id="queryForeach" resultType="com.syf.study.bean.Car" parameterType="com.syf.study.bean.Car">
+		select id,car_name carName,car_type carType,create_date createDate,create_by createBy,status from car
+		<where>
+			<if test="@com.syf.study.util.StringUtils@isNullList(statusList)">
+				AND status in 
+				<foreach separator="," collection="statusList" open="(" close=")" index="index" item="status">
+					#{status}
+				</foreach>
+				
+			</if>
+		</where>
+	</select>
+	
+	
+</mapper>

@@ -3,6 +3,7 @@ package mybatis;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -17,8 +18,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.syf.study.bean.Car;
 import com.syf.study.bean.TestUser;
 import com.syf.study.bean.User;
+import com.syf.study.mapper.CarMapper;
 import com.syf.study.mapper.UserMapper;
 
 public class TestMybatis {
@@ -197,4 +200,85 @@ public class TestMybatis {
 	}
 	
 	
+	@Test
+	public void queryAllCar() {
+		//where三种where查询方式
+		Car queryCar=new Car();
+		queryCar.setCarType("荣威");
+		queryCar.setCreateBy(1);
+		CarMapper mapper = session.getMapper(CarMapper.class);
+		List<Car> queryAll = mapper.queryAll1(queryCar);
+		for (Car car : queryAll) {
+			logger.info("11111"+car.toString());
+		}
+		
+		queryAll =mapper.queryAll2(queryCar);
+		for (Car car : queryAll) {
+			logger.info("22222"+car.toString());
+		}
+		queryAll =mapper.queryAll3(queryCar);
+		for (Car car : queryAll) {
+			logger.info("33333"+car.toString());
+		}
+		
+	}
+
+	@Test
+	public void queryChoose() {
+		Car queryCar=new Car();
+		queryCar.setStatus(4);
+		CarMapper mapper = session.getMapper(CarMapper.class);
+		List<Car> queryAllChoose = mapper.queryAllChoose(queryCar);
+		for (Car car : queryAllChoose) {
+			logger.info("****"+car.toString());
+		}
+		queryCar.setStatus(1);
+		queryAllChoose = mapper.queryAllChoose(queryCar);
+		for (Car car : queryAllChoose) {
+			logger.info("****"+car.toString());
+		}
+	}
+	
+	@Test
+	public void queryUtile() {
+		Car queryCar=new Car();
+		queryCar.setCarName("荣威二代001");
+		CarMapper mapper = session.getMapper(CarMapper.class);
+		List<Car> queryAllChoose = mapper.queryUtile(queryCar);
+		for (Car car : queryAllChoose) {
+			logger.info("****"+car.toString());
+		}
+		queryCar.setCarName("荣威二代003");
+		queryAllChoose = mapper.queryUtile(queryCar);
+		for (Car car : queryAllChoose) {
+			logger.info("****"+car.toString());
+		}
+	}
+	@Test
+	public void update() {
+		Car upCar=new Car();
+		upCar.setCarName("asdf");
+		upCar.setId(1000000001);
+		CarMapper mapper = session.getMapper(CarMapper.class);
+		int update = mapper.update(upCar);
+		session.commit();
+		logger.info("=======================受影响行数："+update);
+	}
+
+
+	@Test
+	public void queryForeach() {
+		//where三种where查询方式
+		Car queryCar=new Car();
+		List<Integer> list=new ArrayList<>();
+		list.add(1);
+		list.add(3);
+		queryCar.setStatusList(list);
+		CarMapper mapper = session.getMapper(CarMapper.class);
+		List<Car> queryAll = mapper.queryForeach(queryCar);
+		for (Car car : queryAll) {
+			logger.info("###############"+car.toString());
+		}
+		
+	}
 }
