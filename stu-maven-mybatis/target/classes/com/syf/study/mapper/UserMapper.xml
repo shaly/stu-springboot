@@ -136,8 +136,8 @@
 	VALUES (#{name},#{age}, #{birthday}, #{createTime}, #{updateTime}, #{createBy},#{updateBy})
 	</insert>
 	
-	<update id="updateUser" parameterType="user" >
-	update USER set name=#{name},age=#{age},birthday=#{birthday} where id=#{id}
+	<update id="updateUser" parameterType="user" flushCache="true"><!-- 修改完毕刷新，默认刷新 -->
+	update USER set name=#{name},age=#{age},birthday=#{birthday},updatetime=now() where id=#{id}
 	
 	</update>
 	<!-- 两种参数形式
@@ -148,4 +148,26 @@
 		<!-- delete from  user where id=#{id} -->
 		delete from  user where id=#{0}
 	</delete>
+	
+	<!-- 模糊查询绑定%号 -->
+	<!-- <![CDATA[ < ]]> == &lt;-->
+	<select id="queryLike" parameterType="user" resultType="user">
+		<!-- 数据的一些二次改造和重构，可以使用bind，比如like 可以定义多个 ,推荐使用-->
+		<bind name="namepro" value="'%'+name+'%'"></bind>
+		<bind name="nonamepro" value="'Jane-??'"></bind>
+		select id,name, age, birthday, createtime, updatetime, createby, updateby from user 
+		where name like #{namepro} and name !=#{nonamepro}
+	</select>
+	
+	
+	<select id="queryLikeIngnorBigSmall" parameterType="user" resultType="user" flushCache="false"><!-- 查询完毕不刷新 -->
+		select id,name, age, birthday, createtime, updatetime, createby, updateby from user 
+		where lower(name) like #{name}
+	</select>
+	<select id="queryByAge" parameterType="integer" resultType="user" >
+		select id,name, age, birthday, createtime, updatetime, createby, updateby from user 
+		where age=#{age}
+	</select>
+	
+	
 </mapper>

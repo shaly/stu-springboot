@@ -126,6 +126,7 @@
 			</if>
 		</where>
 	</update>
+	<!-- 集合和数组循环都是一致的 -->
 	<select id="queryForeach" resultType="com.syf.study.bean.Car" parameterType="com.syf.study.bean.Car">
 		select id,car_name carName,car_type carType,create_date createDate,create_by createBy,status from car
 		<where>

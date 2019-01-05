@@ -46,7 +46,7 @@ public class TestMybatis {
 		session.close();
 	}
 
-	//====================================底层操作方式
+//==================================== 底层操作方式 ====================================
 	
 	@Test
 	public void addUser() {
@@ -89,7 +89,7 @@ public class TestMybatis {
 		logger.info("删除受影响行数:"+count);
 		System.out.println("删除受影响行数:"+count);
 	}
-//====================================xml编程
+//==================================== xml编程 ====================================
 	@Test
 	public void updateTestUser() {
 		TestUser user=new TestUser();
@@ -106,7 +106,7 @@ public class TestMybatis {
 	}
 	
 
-	//====================================接口编程
+//==================================== 接口编程 ====================================
 
 	@Test
 	public void query() {
@@ -151,7 +151,6 @@ public class TestMybatis {
 		
 	}
 	
-	
 	//十分不安全！！！！！
 	@Test
 	public void queryContent() {
@@ -185,7 +184,7 @@ public class TestMybatis {
 		mapper.addUser(user);
 		logger.info("c:"+user.toString());
 		//u
-		user.setName("Jane-你好");
+		user.setName("Jane-修改");
 		mapper.updateUser(user);
 		logger.info("u:"+user.toString());
 		//r
@@ -198,7 +197,6 @@ public class TestMybatis {
 		session.commit();
 	//	logger.info("新增受影响行数:"+deleteUser);
 	}
-	
 	
 	@Test
 	public void queryAllCar() {
@@ -254,7 +252,8 @@ public class TestMybatis {
 			logger.info("****"+car.toString());
 		}
 	}
-	@Test
+	
+	@Test	
 	public void update() {
 		Car upCar=new Car();
 		upCar.setCarName("asdf");
@@ -264,7 +263,6 @@ public class TestMybatis {
 		session.commit();
 		logger.info("=======================受影响行数："+update);
 	}
-
 
 	@Test
 	public void queryForeach() {
@@ -281,4 +279,50 @@ public class TestMybatis {
 		}
 		
 	}
+	
+	@Test
+	public void queryLike() {
+		User user=new User();
+		user.setName("Jane-");
+		UserMapper mapper = session.getMapper(UserMapper.class);
+		List<User> list=mapper.queryLike(user);
+		for (User us : list) {
+			logger.info("bind查询###############"+us.toString());
+		}
+		
+	}
+
+	@Test
+	public void queryLikeIngnorBigSmall() {
+		User user=new User();
+		user.setName("jane-??");
+		UserMapper mapper = session.getMapper(UserMapper.class);
+		List<User> list=mapper.queryLikeIngnorBigSmall(user);
+		for (User us : list) {
+			logger.info("忽略大小写###############"+us.toString());
+		}
+		
+	}
+
+
+	@Test
+	public void updateNow() {
+		User user=new User();
+		user.setId(1000000002);
+		user.setName("janenow");
+		UserMapper mapper = session.getMapper(UserMapper.class);
+		int c=mapper.updateUser(user);
+		logger.info("updateNow###############"+c);
+		session.commit();
+	}
+
+	@Test
+	public void queryByAge() {
+		UserMapper mapper = session.getMapper(UserMapper.class);
+		List<User> list=mapper.queryByAge(26);
+		for (User us : list) {
+			logger.info("参数命名###############"+us.toString());
+		}
+	}
+	
 }
