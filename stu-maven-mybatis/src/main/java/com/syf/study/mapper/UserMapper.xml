@@ -179,4 +179,10 @@
 		limit #{startNo},#{endNo} 
 	</select>
 	
+	
+	<!-- 调用存储过程，记得打开 statementType="CALLABLE"-->
+	<select id="callQueryById"  parameterType="java.lang.Integer" resultType="user" statementType="CALLABLE">
+		 CALL SELECT_BY_USER_ID(#{id})	
+	</select>
+	
 </mapper>

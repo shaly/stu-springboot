@@ -4,6 +4,8 @@ import java.util.List;
 
 import java.util.Map;
 
+import javax.swing.text.AbstractDocument.Content;
+
 import org.apache.ibatis.annotations.Param;
 
 import com.syf.study.bean.User;
@@ -25,4 +27,5 @@ public interface UserMapper {
 	List<User>  queryByAge(@Param("age")Integer age);
 	
 	List<User> queryPage(User user);
+	User  callQueryById(@Param("id")Integer id);
 }

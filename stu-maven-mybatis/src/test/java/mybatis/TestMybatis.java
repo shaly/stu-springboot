@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.text.AbstractDocument.Content;
+
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -336,4 +338,15 @@ public class TestMybatis {
 			logger.info("·ÖÒ³###############"+us.toString());
 		}
 	}
+	
+
+	@Test
+	public void callQueryById() {
+		UserMapper mapper = session.getMapper(UserMapper.class);
+		User u=mapper.callQueryById(1000000001);
+		logger.info("·ÖÒ³###############"+u.toString());
+	}
+	
+	
+	
 }
