@@ -347,6 +347,34 @@ public class TestMybatis {
 		logger.info("分页###############"+u.toString());
 	}
 	
+
 	
+	@Test
+	public void transaction() {
+		//原子性（有基本单元，比如转账时存钱取钱是一个单元）、
+		//隔离性(我转账和你转账互不影响)
+		//一致性（要么成功要么失败。成功一起成功，失败一起失败）
+		//持久性（一旦提交成功，立即生效）、
+		User user=new User();
+		user.setAge(25);
+		user.setName("22测试测试事务");
+		user.setBirthday(new Date());
+		user.setCreateTime(new Date());
+		user.setCreateBy(1234567890);
+		user.setUpdateBy(9876543);
+		user.setUpdateTime(new Date());
+		int count = session.update("com.syf.study.mapper.UserMapper.addUser",user);//新增修改删除都用update，不过新增也可以用insert
+		UserMapper mapper = session.getMapper(UserMapper.class);
+		//事务未提交，但mapper从sqlsession缓存中查到了未提交的数据
+		List<User> list = mapper.queryAll();
+		for (User us : list) {
+			logger.info(count+"事务###############"+us.toString());
+		}
+		
+		
+		
+		//session.commit();
+		
+	}
 	
 }
