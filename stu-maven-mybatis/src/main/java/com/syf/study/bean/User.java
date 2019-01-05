@@ -11,6 +11,23 @@ public class User {
 	private Date updateTime;
 	private Integer createBy;
 	private Integer updateBy;
+	private Integer startNo;
+	private Integer endNo;
+	
+	
+	
+	public Integer getStartNo() {
+		return startNo;
+	}
+	public void setStartNo(Integer startNo) {
+		this.startNo = startNo;
+	}
+	public Integer getEndNo() {
+		return endNo;
+	}
+	public void setEndNo(Integer endNo) {
+		this.endNo = endNo;
+	}
 	public Integer getId() {
 		return id;
 	}

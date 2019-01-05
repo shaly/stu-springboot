@@ -164,10 +164,19 @@
 		select id,name, age, birthday, createtime, updatetime, createby, updateby from user 
 		where lower(name) like #{name}
 	</select>
+	<!-- SQL片段 -->
+	<sql id="baseColm">
+		id,name, age, birthday, createtime, updatetime, createby, updateby 
+	</sql>
 	<select id="queryByAge" parameterType="integer" resultType="user" >
-		select id,name, age, birthday, createtime, updatetime, createby, updateby from user 
+		select 
+		<include refid="baseColm"></include>
+		from user 
 		where age=#{age}
 	</select>
-	
+	<select id="queryPage" parameterType="user" resultType="user" >
+		select id,name, age, birthday, createtime, updatetime, createby, updateby from user
+		limit #{startNo},#{endNo} 
+	</select>
 	
 </mapper>

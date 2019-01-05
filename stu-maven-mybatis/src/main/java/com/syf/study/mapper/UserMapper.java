@@ -23,4 +23,6 @@ public interface UserMapper {
 
 	List<User> queryLikeIngnorBigSmall(User user);
 	List<User>  queryByAge(@Param("age")Integer age);
+	
+	List<User> queryPage(User user);
 }

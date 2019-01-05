@@ -324,5 +324,16 @@ public class TestMybatis {
 			logger.info("参数命名###############"+us.toString());
 		}
 	}
-	
+
+	@Test
+	public void queryPage() {
+		User user=new User();
+		user.setStartNo(0);
+		user.setEndNo(100);
+		UserMapper mapper = session.getMapper(UserMapper.class);
+		List<User> list=mapper.queryPage(user);
+		for (User us : list) {
+			logger.info("分页###############"+us.toString());
+		}
+	}
 }
