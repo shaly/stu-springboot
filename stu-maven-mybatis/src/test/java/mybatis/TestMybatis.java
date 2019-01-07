@@ -170,7 +170,7 @@ public class TestMybatis {
 		}
 		
 	}
-	
+	//简单增删改查
 	@Test
 	public void curd() {
 		User user=new User();
@@ -199,10 +199,10 @@ public class TestMybatis {
 		session.commit();
 	//	logger.info("新增受影响行数:"+deleteUser);
 	}
-	
+
+	//where三种where查询方式
 	@Test
 	public void queryAllCar() {
-		//where三种where查询方式
 		Car queryCar=new Car();
 		queryCar.setCarType("荣威");
 		queryCar.setCreateBy(1);
@@ -222,7 +222,7 @@ public class TestMybatis {
 		}
 		
 	}
-
+	//choose查询
 	@Test
 	public void queryChoose() {
 		Car queryCar=new Car();
@@ -239,6 +239,7 @@ public class TestMybatis {
 		}
 	}
 	
+	//工具类条件判断
 	@Test
 	public void queryUtile() {
 		Car queryCar=new Car();
@@ -266,6 +267,7 @@ public class TestMybatis {
 		logger.info("=======================受影响行数："+update);
 	}
 
+	//循环参数
 	@Test
 	public void queryForeach() {
 		//where三种where查询方式
@@ -281,7 +283,7 @@ public class TestMybatis {
 		}
 		
 	}
-	
+	//模糊查询bind绑定%%
 	@Test
 	public void queryLike() {
 		User user=new User();
@@ -294,6 +296,7 @@ public class TestMybatis {
 		
 	}
 
+	//模糊查询忽略大小写
 	@Test
 	public void queryLikeIngnorBigSmall() {
 		User user=new User();
@@ -307,6 +310,7 @@ public class TestMybatis {
 	}
 
 
+	//修改数据，记录当前时间
 	@Test
 	public void updateNow() {
 		User user=new User();
@@ -318,6 +322,7 @@ public class TestMybatis {
 		session.commit();
 	}
 
+	//定义参数名
 	@Test
 	public void queryByAge() {
 		UserMapper mapper = session.getMapper(UserMapper.class);
@@ -327,6 +332,7 @@ public class TestMybatis {
 		}
 	}
 
+	//分页
 	@Test
 	public void queryPage() {
 		User user=new User();
@@ -340,6 +346,7 @@ public class TestMybatis {
 	}
 	
 
+	//存储过程
 	@Test
 	public void callQueryById() {
 		UserMapper mapper = session.getMapper(UserMapper.class);
@@ -348,7 +355,7 @@ public class TestMybatis {
 	}
 	
 
-	
+	//事务
 	@Test
 	public void transaction() {
 		//原子性（有基本单元，比如转账时存钱取钱是一个单元）、
@@ -375,6 +382,30 @@ public class TestMybatis {
 		
 		//session.commit();
 		
+	}
+
+	//mybatis的一级缓存机制
+	@Test
+	public void querySqlSession() {
+		//一级缓存：Sqlsession	默认是开启的
+		//private SqlSession session ;
+		
+		//session不关的前提下，同样的参数查询语句之后执行一次
+		UserMapper mapper = session.getMapper(UserMapper.class);
+		
+		//sqlsession底层其实是一个Hashmap,参数是key,内容是value
+		User q1 = mapper.queryByPrimaryKey(1000000001);
+		System.out.println("q1="+q1.toString());
+		User q2 = mapper.queryByPrimaryKey(1000000001);
+		System.out.println("q2="+q2.toString());
+		User q3 = mapper.queryByPrimaryKey(1000000002);
+		System.out.println("q3="+q3.toString());
+		User q4 = mapper.queryByPrimaryKey(1000000001);
+		System.out.println("q4="+q4.toString());
+		//清除mybatis缓存
+		session.clearCache();
+		User q5 = mapper.queryByPrimaryKey(1000000001);
+		System.out.println("q5="+q5.toString());
 	}
 	
 }

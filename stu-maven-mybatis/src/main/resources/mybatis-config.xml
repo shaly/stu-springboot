@@ -53,11 +53,11 @@
 			</transactionManager> -->
 			
 			<!-- 1.mybatis 默认数据库连接池 ，有3种 UNPOOLED、 POOLED 、JDNI[依赖于tomcat容器配置]-->
-			<!-- <dataSource type="POOLED"> -->
+			<dataSource type="POOLED">
 			<!-- 2.自定义c3p0连接池 ,效率比druid低，但稳定性比druid高 -->
 			<!-- <dataSource type="com.syf.study.core.C3P0DataSourceFactory"> -->
 			<!-- 3.自定义alibaba druid连接池 -->
-			<dataSource type="com.syf.study.core.DruidDataSourceFactory">
+			<!-- <dataSource type="com.syf.study.core.DruidDataSourceFactory"> -->
 				<property name="driver" value="${driver}"/>
 				<property name="url" value="${url}"/>
 				<property name="username" value="${username}"/>
