@@ -1,8 +1,10 @@
 package com.syf.study.bean;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class User {
+// 二级缓存第三步：序列化 -->
+public class User implements Serializable{
 	private Integer id;
 	private String name;
 	private Integer age;

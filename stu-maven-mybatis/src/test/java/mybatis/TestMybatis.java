@@ -31,13 +31,13 @@ public class TestMybatis {
 	private Logger logger=Logger.getLogger(TestMybatis.class);
 	
 	private SqlSession session ;
-
+	private SqlSessionFactory sessionFactory ;
 	@Before
 	public void before() throws IOException {
 		//1.加载mybatis-config.xml文件，去装配数据的连接信息
 		InputStream resourceAsStream = Resources.getResourceAsStream("mybatis-config.xml");
 		//2.初始化sqlsessionFactory对象
-		SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(resourceAsStream);
+		sessionFactory = new SqlSessionFactoryBuilder().build(resourceAsStream);
 		//3.获取sqlsession会话对象
 		session = sessionFactory.openSession();
 	}
@@ -406,6 +406,42 @@ public class TestMybatis {
 		session.clearCache();
 		User q5 = mapper.queryByPrimaryKey(1000000001);
 		System.out.println("q5="+q5.toString());
+	}
+	
+	//mybatis的二级缓存机制
+	@Test
+	public void queryCachEnable() {
+		//二级缓存：Sqlsession	默认是关闭的，需要在配置文件中打开
+		//private SqlSession session ;
+		
+		//一级缓存的执行结果会在二级缓存中默认备份一份,
+		//第一次查询sqlsession关了也没关系，其他sqlsession会去二级缓存中去找之前备份的
+		UserMapper mapper = session.getMapper(UserMapper.class);
+		
+		//sqlsession底层其实是一个Hashmap,参数是key,内容是value
+		User q1 = mapper.queryByPrimaryKey(1000000001);
+		System.out.println("q1="+q1.toString());
+		session.close();
+		
+		session=sessionFactory.openSession();
+		mapper = session.getMapper(UserMapper.class);
+		User q2 = mapper.queryByPrimaryKey(1000000001);
+		System.out.println("q2="+q2.toString());
+		session.close();
+
+		
+		session=sessionFactory.openSession();
+		mapper = session.getMapper(UserMapper.class);
+		User q3 = mapper.queryByPrimaryKey(1000000002);
+		System.out.println("q3="+q3.toString());
+		session.close();
+		
+		session=sessionFactory.openSession();
+		mapper = session.getMapper(UserMapper.class);
+		User q4 = mapper.queryByPrimaryKey(1000000001);
+		System.out.println("q4="+q4.toString());
+		session.close();
+		
 	}
 	
 }

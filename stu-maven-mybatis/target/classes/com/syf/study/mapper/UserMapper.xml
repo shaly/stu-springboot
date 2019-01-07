@@ -3,6 +3,8 @@
 <!-- namespace是命名空间，必须保证唯一性,如果是用接口编程那么工作空间必须和mapper类路径一致 -->
 <mapper namespace="com.syf.study.mapper.UserMapper">
 	
+		<!-- 二级缓存第二步：需要在需要进行缓存的文件中输入标签 -->
+		<cache/>
 	
 	<!-- 缓存设置 -->
 <!-- 	<cache></cache> -->

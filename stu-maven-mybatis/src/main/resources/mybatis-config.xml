@@ -30,6 +30,9 @@
 		<!-- <setting name="useGeneratedKeys" value="true" /> -->
 		<!-- 设置延迟加载 -->
 		<setting name="lazyLoadingEnabled" value="true" />
+		
+		<!-- 二级缓存第一步：打开二级缓存 -->
+		<setting name="cacheEnabled" value="true" />
 	</settings>
 	
 	<!--  ### 别名映射 ###  -->
