@@ -21,9 +21,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.syf.study.bean.Car;
+import com.syf.study.bean.MybatisStudent;
 import com.syf.study.bean.TestUser;
 import com.syf.study.bean.User;
 import com.syf.study.mapper.CarMapper;
+import com.syf.study.mapper.MybatisStudentMapper;
 import com.syf.study.mapper.UserMapper;
 
 public class TestMybatis {
@@ -408,8 +410,8 @@ public class TestMybatis {
 		System.out.println("q5="+q5.toString());
 	}
 	
-	//mybatis的二级缓存机制
-	@Test
+	//mybatis的二级缓存机制,(ehcache也可以用这个测试)
+	//@Test
 	public void queryCachEnable() {
 		//二级缓存：Sqlsession	默认是关闭的，需要在配置文件中打开
 		//private SqlSession session ;
@@ -442,6 +444,21 @@ public class TestMybatis {
 		System.out.println("q4="+q4.toString());
 		session.close();
 		
+	}
+	//一对一映射
+	@Test
+	public void onbyon() {
+		//二级缓存：Sqlsession	默认是关闭的，需要在配置文件中打开
+		//private SqlSession session ;
+		
+		//一级缓存的执行结果会在二级缓存中默认备份一份,
+		//第一次查询sqlsession关了也没关系，其他sqlsession会去二级缓存中去找之前备份的
+		MybatisStudentMapper mapper = session.getMapper(MybatisStudentMapper.class);
+		
+		//sqlsession底层其实是一个Hashmap,参数是key,内容是value
+		MybatisStudent q1 = mapper.queryById(100001);
+		System.out.println("q1="+q1.toString());
+		session.close();
 	}
 	
 }

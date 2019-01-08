@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace是命名空间，必须保证唯一性,如果是用接口编程那么工作空间必须和mapper类路径一致 -->
+<mapper namespace="com.syf.study.mapper.MybatisClassMapper">
+
+	<select id="queryById" resultType="MybatisClass" parameterType="java.lang.Integer">
+		select * from mybatis_class where id=#{id}
+	</select>
+</mapper>

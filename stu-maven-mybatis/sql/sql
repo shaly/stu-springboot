@@ -1,0 +1,97 @@
+--=================== user ===================
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `age` int(11) DEFAULT NULL,
+  `birthday` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `createtime` datetime DEFAULT NULL,
+  `updatetime` datetime DEFAULT NULL,
+  `createby` int(255) DEFAULT NULL,
+  `updateby` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1000000057 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of user
+-- ----------------------------
+INSERT INTO `user` VALUES ('1000000001', '缓存测试', '25', '2019-01-05 16:38:58', '2018-12-10 22:32:18', '2019-01-05 16:38:58', '1', '1');
+INSERT INTO `user` VALUES ('1000000002', 'janenow', null, null, '2018-12-27 22:32:57', '2019-01-05 16:46:09', '2', '2');
+INSERT INTO `user` VALUES ('1000000049', 'Jane-你好', '26', '2019-01-05 16:12:08', '2019-01-05 16:12:08', '2019-01-05 16:12:08', '1234567890', '9876543');
+INSERT INTO `user` VALUES ('1000000050', '12Jane2', '25', '2019-01-05 16:12:08', '2019-01-05 16:12:08', '2019-01-05 16:12:08', '1234567890', '9876543');
+INSERT INTO `user` VALUES ('1000000055', 'Jane-修改', '26', '2019-01-05 16:39:40', '2019-01-05 16:39:40', '2019-01-05 16:39:40', '1234567890', '9876543');
+INSERT INTO `user` VALUES ('1000000056', '测试测试事务', '25', '2019-01-06 00:20:11', '2019-01-06 00:20:11', '2019-01-06 00:20:11', '1234567890', '9876543');
+
+--=================== test_user ===================
+DROP TABLE IF EXISTS `test_user`;
+CREATE TABLE `test_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `age` int(11) DEFAULT NULL,
+  `sex` char(1) DEFAULT '0' COMMENT '0-boy;1-girl',
+  `birthday` date DEFAULT NULL,
+  `class` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1000000002 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of test_user
+-- ----------------------------
+INSERT INTO `test_user` VALUES ('1000000001', '你567好', '25', '1', '2019-01-05', '211班');
+
+--=================== car ===================
+DROP TABLE IF EXISTS `car`;
+CREATE TABLE `car` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `car_name` varchar(255) DEFAULT NULL,
+  `car_type` varchar(255) DEFAULT NULL,
+  `create_date` datetime DEFAULT NULL,
+  `create_by` varchar(255) DEFAULT NULL,
+  `status` int(1) DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1000000009 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of car
+-- ----------------------------
+INSERT INTO `car` VALUES ('1000000001', 'asdf', '荣威', '2018-12-28 20:30:59', '1', '1');
+INSERT INTO `car` VALUES ('1000000002', '吉利二代002', '吉利', '2018-12-28 20:30:59', '2', '0');
+INSERT INTO `car` VALUES ('1000000003', '荣威二代001', '荣威', '2018-12-28 20:30:59', '2', '1');
+INSERT INTO `car` VALUES ('1000000004', '荣威二代004', '荣威', '2018-12-28 20:30:59', '1', '0');
+INSERT INTO `car` VALUES ('1000000005', '吉利二代005', '吉利', '2018-12-28 20:30:59', '3', '1');
+INSERT INTO `car` VALUES ('1000000006', '荣威二代006', '荣威', '2018-12-28 20:30:59', '3', '1');
+INSERT INTO `car` VALUES ('1000000007', '荣威二代007', '荣威', '2018-12-28 20:30:59', '3', '0');
+INSERT INTO `car` VALUES ('1000000008', '荣威二代008', '荣威', '2018-12-28 20:30:59', '3', '1');
+
+--=================== mybatis_class ===================
+DROP TABLE IF EXISTS `mybatis_class`;
+CREATE TABLE `mybatis_class` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `classname` varchar(255) DEFAULT NULL,
+  `desc` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=100002 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of mybatis_class
+-- ----------------------------
+INSERT INTO `mybatis_class` VALUES ('100001', 'class1', '班级1');
+
+--=================== mybatis_student ===================
+DROP TABLE IF EXISTS `mybatis_student`;
+CREATE TABLE `mybatis_student` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `age` int(11) DEFAULT NULL,
+  `sex` int(11) DEFAULT NULL,
+  `classid` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_CLASS_ID` (`classid`),
+  CONSTRAINT `CLASS_ID` FOREIGN KEY (`classid`) REFERENCES `mybatis_class` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=100002 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of mybatis_student
+-- ----------------------------
+INSERT INTO `mybatis_student` VALUES ('100001', 'Jane', '1', '1', '100001');
+

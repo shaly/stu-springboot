@@ -18,8 +18,14 @@
 		<cache size="1024" readOnly="false" eviction="LRU" flushInterval="1000"/>
 	 -->
 	 
-		<!-- ehcache缓存第三步：标记缓存 -->
+		<!-- ehcache缓存第三步：默认缓存类 -->
 	 <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+	 <!-- 自定义缓存,自定义类实现Cache接口 -->
+	<!--  <cache-ref namespace="com.syf.study.xxx.xxxCaches"/> -->
+	 
+	 
+	 
+	 
 	<!-- 缓存设置 -->
 <!-- 	<cache></cache> -->
 	<!-- 引入外部的自定缓存类型 -->
