@@ -1,0 +1,9 @@
+com\syf\study\core\MyObjectFactory.class
+com\syf\study\mapper\CarMapper.class
+com\syf\study\core\C3P0DataSourceFactory.class
+com\syf\study\bean\Car.class
+com\syf\study\core\DruidDataSourceFactory.class
+com\syf\study\util\StringUtils.class
+com\syf\study\bean\User.class
+com\syf\study\bean\TestUser.class
+com\syf\study\mapper\UserMapper.class

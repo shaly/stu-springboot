@@ -50,7 +50,7 @@ public class TestMybatis {
 
 //==================================== 底层操作方式 ====================================
 	
-	@Test
+	//@Test
 	public void addUser() {
 		User user=new User();
 		user.setAge(25);
@@ -68,7 +68,7 @@ public class TestMybatis {
 		System.out.println("新增返回ID为:"+user.getId());
 	}
 
-	@Test
+	//@Test
 	public void updateUser() {
 		User user=new User();
 		user.setId(1000000011);
@@ -84,7 +84,7 @@ public class TestMybatis {
 		logger.info("修改受影响行数:"+count);
 		System.out.println("修改受影响行数:"+count);
 	}
-	@Test
+	//@Test
 	public void deleteUser() {
 		int count = session.update("com.syf.study.mapper.UserMapper.deleteUser",1000000006);//新增修改删除都用update
 		session.commit();
@@ -92,7 +92,7 @@ public class TestMybatis {
 		System.out.println("删除受影响行数:"+count);
 	}
 //==================================== xml编程 ====================================
-	@Test
+	//@Test
 	public void updateTestUser() {
 		TestUser user=new TestUser();
 		user.setAge(25);
@@ -110,7 +110,7 @@ public class TestMybatis {
 
 //==================================== 接口编程 ====================================
 
-	@Test
+	//@Test
 	public void query() {
 		//4.获得mapper对象
 		UserMapper mapper = session.getMapper(UserMapper.class);
@@ -122,7 +122,7 @@ public class TestMybatis {
 		
 	}
 
-	@Test
+	//@Test
 	public void queryByPrimaryKey() {
 		//4.获得mapper对象
 		UserMapper mapper = session.getMapper(UserMapper.class);
@@ -154,7 +154,7 @@ public class TestMybatis {
 	}
 	
 	//十分不安全！！！！！
-	@Test
+	//@Test
 	public void queryContent() {
 		//4.获得mapper对象
 		UserMapper mapper = session.getMapper(UserMapper.class);
@@ -171,7 +171,7 @@ public class TestMybatis {
 		
 	}
 	//简单增删改查
-	@Test
+	//@Test
 	public void curd() {
 		User user=new User();
 		user.setAge(26);
@@ -201,7 +201,7 @@ public class TestMybatis {
 	}
 
 	//where三种where查询方式
-	@Test
+	//@Test
 	public void queryAllCar() {
 		Car queryCar=new Car();
 		queryCar.setCarType("荣威");
@@ -223,7 +223,7 @@ public class TestMybatis {
 		
 	}
 	//choose查询
-	@Test
+	//@Test
 	public void queryChoose() {
 		Car queryCar=new Car();
 		queryCar.setStatus(4);
@@ -240,7 +240,7 @@ public class TestMybatis {
 	}
 	
 	//工具类条件判断
-	@Test
+	//@Test
 	public void queryUtile() {
 		Car queryCar=new Car();
 		queryCar.setCarName("荣威二代001");
@@ -256,7 +256,7 @@ public class TestMybatis {
 		}
 	}
 	
-	@Test	
+	//@Test	
 	public void update() {
 		Car upCar=new Car();
 		upCar.setCarName("asdf");
@@ -268,10 +268,10 @@ public class TestMybatis {
 	}
 
 	//循环参数
-	@Test
+	//@Test
 	public void queryForeach() {
 		//where三种where查询方式
-		Car queryCar=new Car();
+	/*	Car queryCar=new Car();
 		List<Integer> list=new ArrayList<>();
 		list.add(1);
 		list.add(3);
@@ -280,11 +280,11 @@ public class TestMybatis {
 		List<Car> queryAll = mapper.queryForeach(queryCar);
 		for (Car car : queryAll) {
 			logger.info("###############"+car.toString());
-		}
+		}*/
 		
 	}
 	//模糊查询bind绑定%%
-	@Test
+	//@Test
 	public void queryLike() {
 		User user=new User();
 		user.setName("Jane-");
@@ -297,7 +297,7 @@ public class TestMybatis {
 	}
 
 	//模糊查询忽略大小写
-	@Test
+	//@Test
 	public void queryLikeIngnorBigSmall() {
 		User user=new User();
 		user.setName("jane-??");
@@ -311,7 +311,7 @@ public class TestMybatis {
 
 
 	//修改数据，记录当前时间
-	@Test
+	//@Test
 	public void updateNow() {
 		User user=new User();
 		user.setId(1000000002);
@@ -323,7 +323,7 @@ public class TestMybatis {
 	}
 
 	//定义参数名
-	@Test
+	//@Test
 	public void queryByAge() {
 		UserMapper mapper = session.getMapper(UserMapper.class);
 		List<User> list=mapper.queryByAge(26);
@@ -333,7 +333,7 @@ public class TestMybatis {
 	}
 
 	//分页
-	@Test
+	//@Test
 	public void queryPage() {
 		User user=new User();
 		user.setStartNo(0);
@@ -347,7 +347,7 @@ public class TestMybatis {
 	
 
 	//存储过程
-	@Test
+	//@Test
 	public void callQueryById() {
 		UserMapper mapper = session.getMapper(UserMapper.class);
 		User u=mapper.callQueryById(1000000001);
@@ -356,7 +356,7 @@ public class TestMybatis {
 	
 
 	//事务
-	@Test
+	//@Test
 	public void transaction() {
 		//原子性（有基本单元，比如转账时存钱取钱是一个单元）、
 		//隔离性(我转账和你转账互不影响)
@@ -385,7 +385,7 @@ public class TestMybatis {
 	}
 
 	//mybatis的一级缓存机制
-	@Test
+	//@Test
 	public void querySqlSession() {
 		//一级缓存：Sqlsession	默认是开启的
 		//private SqlSession session ;

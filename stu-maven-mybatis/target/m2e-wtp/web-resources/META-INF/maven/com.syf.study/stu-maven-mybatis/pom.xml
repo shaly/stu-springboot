@@ -44,8 +44,26 @@
     	<artifactId>druid</artifactId>
     	<version>1.1.9</version>
     </dependency>
+    
+    
+  	<!-- 引入ehcache -->
+    <!-- <dependency>
+    	<groupId>net.sf.ehcache</groupId>
+    	<artifactId>ehcache</artifactId>
+    	<version>2.9.0</version>
+    </dependency>
+     -->
+     <!-- 结合mybatis自动引入ehcache包 -->
+    <dependency>
+    	<groupId>org.mybatis.caches</groupId>
+    	<artifactId>mybatis-ehcache</artifactId>
+    	<version>1.1.0</version>
+    </dependency>
+    
   </dependencies>
   <build>
     <finalName>stu-maven-mybatis</finalName>
   </build>
+  
+  
 </project>

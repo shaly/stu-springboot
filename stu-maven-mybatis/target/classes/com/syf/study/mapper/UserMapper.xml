@@ -4,8 +4,22 @@
 <mapper namespace="com.syf.study.mapper.UserMapper">
 	
 		<!-- 二级缓存第二步：需要在需要进行缓存的文件中输入标签 -->
-		<cache/>
-	
+		<!-- HashMap 
+		key:命名空间（com.syf.study.mapper.UserMapper）
+		value:查询结果
+		size：缓存条数1024条
+		readOnly:"false" 
+		eviction:缓存策略
+				 "LRU"(清除最长时间不被使用的对象，缓存最新的,默认推荐使用)
+				 "FIFO"(先进先出)
+				 "SOFT"(JVM进行回收)
+		flushInterval:"1000"(单位毫秒，每秒进行刷新缓存，将不怎么用的缓存清除掉，默认不配置不进行刷新)
+		
+		<cache size="1024" readOnly="false" eviction="LRU" flushInterval="1000"/>
+	 -->
+	 
+		<!-- ehcache缓存第三步：标记缓存 -->
+	 <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
 	<!-- 缓存设置 -->
 <!-- 	<cache></cache> -->
 	<!-- 引入外部的自定缓存类型 -->
