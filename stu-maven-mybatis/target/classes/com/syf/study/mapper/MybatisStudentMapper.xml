@@ -6,15 +6,44 @@
 	<resultMap type="MybatisStudent" id="baseMap">
 		<id column="id" property="id"/>
 		<result column="" property="id"/>
+		<result column="create_date" property="createDate"/>
+		<result column="create_by" property="createBy"/>
+		<result column="update_date" property="updateDate"/>
+		<result column="update_by" property="updateBy"/>
 		<!-- 一对一关系用association -->
 		<association property="mybatisClass" column="classid" select="com.syf.study.mapper.MybatisClassMapper.queryById"></association>
 	</resultMap>
 
+	<resultMap type="MybatisStudent" id="classMap">
+		<id column="id" property="id"/>
+		<result column="" property="id"/>
+		<result column="create_date" property="createDate"/>
+		<result column="create_by" property="createBy"/>
+		<result column="update_date" property="updateDate"/>
+		<result column="update_by" property="updateBy"/>
+		<!-- 一对一关系用association -->
+		<association property="mybatisClass" column="classid" select="com.syf.study.mapper.MybatisClassMapper.queryById"></association>
+	</resultMap>
+	
+	<sql id="baseColm">
+		id,name,age,sex,classid,create_date,create_by,update_date,update_by
+	</sql>
+
 	<select id="queryById" resultMap="baseMap" parameterType="java.lang.Integer">
-		select id,name,age,sex,classid from mybatis_student where id=#{id}
+		select 
+		<include refid="baseColm"></include>
+		 from mybatis_student where id=#{id}
 	</select>
 	
 	<select id="queryAll" resultMap="baseMap">
-		select id,name,age,sex,classid from mybatis_student
+		select 
+		<include refid="baseColm"></include> from mybatis_student
+	</select>
+	
+	
+	<select id="queryByClassId"  resultMap="baseMap" parameterType="java.lang.Integer">
+		select 
+		<include refid="baseColm"></include>
+		 from mybatis_student where classid=#{classid}
 	</select>
 </mapper>

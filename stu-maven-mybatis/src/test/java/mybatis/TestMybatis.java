@@ -21,10 +21,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.syf.study.bean.Car;
+import com.syf.study.bean.MybatisClass;
 import com.syf.study.bean.MybatisStudent;
 import com.syf.study.bean.TestUser;
 import com.syf.study.bean.User;
 import com.syf.study.mapper.CarMapper;
+import com.syf.study.mapper.MybatisClassMapper;
 import com.syf.study.mapper.MybatisStudentMapper;
 import com.syf.study.mapper.UserMapper;
 
@@ -446,7 +448,7 @@ public class TestMybatis {
 		
 	}
 	//一对一映射
-	@Test
+	//@Test
 	public void onebyone() {
 		//二级缓存：Sqlsession	默认是关闭的，需要在配置文件中打开
 		//private SqlSession session ;
@@ -464,7 +466,7 @@ public class TestMybatis {
 
 	//一对一映射,解决sql多对一，如果有一万条则根据ID查询一万次study_class
 	//解决方式：进行延迟加载，用到再加载，没用到不加载
-	@Test
+	//@Test
 	public void onebyoneSql() {
 		//二级缓存：Sqlsession	默认是关闭的，需要在配置文件中打开
 		//private SqlSession session ;
@@ -479,8 +481,25 @@ public class TestMybatis {
 		for (int i=0;i<list.size();i++) {
 			if(i%2==0) {
 				m=list.get(i);
-				System.out.println("******="+m.toString());
+				System.out.println(i+"******="+m.toString());
 			}
+		}
+		session.close();
+	}
+	
+	//一对多关系
+	@Test
+	public void oneByMore() {
+		MybatisClassMapper mapper = session.getMapper(MybatisClassMapper.class);
+		
+		//sqlsession底层其实是一个Hashmap,参数是key,内容是value
+		MybatisClass cla = mapper.queryById2(100001);
+		List<MybatisStudent> users = cla.getUsers();
+		System.out.println("******="+cla.toString());
+		MybatisStudent m =null;
+		for (int i=0;i<users.size();i++) {
+			m=users.get(i);
+			System.out.println(i+"******="+m.toString());
 		}
 		session.close();
 	}

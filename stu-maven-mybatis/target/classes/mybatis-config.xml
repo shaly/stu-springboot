@@ -35,8 +35,8 @@
 		<!-- ehcache缓存第二步：打开缓存 -->
 		<setting name="cacheEnabled" value="true" />
 		
-		<!-- 配置延迟加载，目标是告诉连级对象只有在使用的时候才去调用sql执行 -->
 		<setting name="lazyLoadingEnabled" value="true" />
+		<!-- 配置延迟加载，目标是告诉连级对象只有在使用的时候才去调用sql执行 -->
 		<setting name="aggressiveLazyLoading" value="false" />
 	</settings>
 	

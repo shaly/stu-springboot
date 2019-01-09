@@ -1,9 +1,21 @@
 package com.syf.study.bean;
 
+import java.util.List;
+
 public class MybatisClass {
 	private Integer id;
 	private String className;
 	private String desc;
+	
+	List<MybatisStudent> users;
+	
+	
+	public List<MybatisStudent> getUsers() {
+		return users;
+	}
+	public void setUsers(List<MybatisStudent> users) {
+		this.users = users;
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -24,8 +36,9 @@ public class MybatisClass {
 	}
 	@Override
 	public String toString() {
-		return "MybatisClass [id=" + id + ", className=" + className + ", desc=" + desc + "]";
+		return "MybatisClass [id=" + id + ", className=" + className + ", desc=" + desc + ", users=" + users + "]";
 	}
+	
 	
 
 }

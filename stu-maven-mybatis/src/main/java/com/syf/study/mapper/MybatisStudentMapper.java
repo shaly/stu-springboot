@@ -2,6 +2,8 @@ package com.syf.study.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.syf.study.bean.MybatisStudent;
 
 public interface MybatisStudentMapper {
@@ -10,5 +12,6 @@ public interface MybatisStudentMapper {
 	
 
 	public List<MybatisStudent> queryAll();
+	public MybatisStudent queryByClassId(@Param("classid") Integer classid);
 
 }
