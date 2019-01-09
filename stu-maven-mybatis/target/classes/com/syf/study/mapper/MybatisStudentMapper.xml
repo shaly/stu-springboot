@@ -11,6 +11,10 @@
 	</resultMap>
 
 	<select id="queryById" resultMap="baseMap" parameterType="java.lang.Integer">
-		select * from mybatis_student where id=#{id}
+		select id,name,age,sex,classid from mybatis_student where id=#{id}
+	</select>
+	
+	<select id="queryAll" resultMap="baseMap">
+		select id,name,age,sex,classid from mybatis_student
 	</select>
 </mapper>

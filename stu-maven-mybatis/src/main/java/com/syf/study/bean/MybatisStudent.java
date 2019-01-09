@@ -36,11 +36,11 @@ public class MybatisStudent {
 	public void setMybatisClass(MybatisClass mybatisClass) {
 		this.mybatisClass = mybatisClass;
 	}
-	@Override
+/*	@Override
 	public String toString() {
 		return "MybatisStudent [id=" + id + ", name=" + name + ", age=" + age + ", sex=" + sex + ", mybatisClass="
 				+ mybatisClass + "]";
-	}
+	}*/
 	
 
 }

@@ -447,7 +447,7 @@ public class TestMybatis {
 	}
 	//一对一映射
 	@Test
-	public void onbyon() {
+	public void onebyone() {
 		//二级缓存：Sqlsession	默认是关闭的，需要在配置文件中打开
 		//private SqlSession session ;
 		
@@ -458,6 +458,30 @@ public class TestMybatis {
 		//sqlsession底层其实是一个Hashmap,参数是key,内容是value
 		MybatisStudent q1 = mapper.queryById(100001);
 		System.out.println("q1="+q1.toString());
+		session.close();
+	}
+	
+
+	//一对一映射,解决sql多对一，如果有一万条则根据ID查询一万次study_class
+	//解决方式：进行延迟加载，用到再加载，没用到不加载
+	@Test
+	public void onebyoneSql() {
+		//二级缓存：Sqlsession	默认是关闭的，需要在配置文件中打开
+		//private SqlSession session ;
+		
+		//一级缓存的执行结果会在二级缓存中默认备份一份,
+		//第一次查询sqlsession关了也没关系，其他sqlsession会去二级缓存中去找之前备份的
+		MybatisStudentMapper mapper = session.getMapper(MybatisStudentMapper.class);
+		
+		//sqlsession底层其实是一个Hashmap,参数是key,内容是value
+		List<MybatisStudent> list = mapper.queryAll();
+		MybatisStudent m =null;
+		for (int i=0;i<list.size();i++) {
+			if(i%2==0) {
+				m=list.get(i);
+				System.out.println("******="+m.toString());
+			}
+		}
 		session.close();
 	}
 	
