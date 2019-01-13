@@ -20,13 +20,20 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.support.jaxrs.FastJsonFeature;
+import com.alibaba.fastjson.support.spring.annotation.FastJsonFilter;
 import com.syf.study.bean.Car;
 import com.syf.study.bean.MybatisClass;
+import com.syf.study.bean.MybatisCourse;
+import com.syf.study.bean.MybatisOrder;
 import com.syf.study.bean.MybatisStudent;
 import com.syf.study.bean.TestUser;
 import com.syf.study.bean.User;
 import com.syf.study.mapper.CarMapper;
 import com.syf.study.mapper.MybatisClassMapper;
+import com.syf.study.mapper.MybatisCourseMapper;
+import com.syf.study.mapper.MybatisOrderMapper;
 import com.syf.study.mapper.MybatisStudentMapper;
 import com.syf.study.mapper.UserMapper;
 
@@ -488,7 +495,7 @@ public class TestMybatis {
 	}
 	
 	//一对多关系
-	@Test
+	//@Test
 	public void oneByMore() {
 		MybatisClassMapper mapper = session.getMapper(MybatisClassMapper.class);
 		
@@ -503,5 +510,38 @@ public class TestMybatis {
 		}
 		session.close();
 	}
-	
+
+	//一对多关系
+	@Test
+	public void oneByMoreUserOrders() {
+		MybatisStudentMapper mapper = session.getMapper(MybatisStudentMapper.class);
+		
+		//sqlsession底层其实是一个Hashmap,参数是key,内容是value
+		MybatisStudent cla = mapper.queryUserOrdersByUserId(100001);
+		List<MybatisOrder> orders = cla.getMybatisOrders();
+		MybatisOrder m =null;
+		for (int i=0;i<orders.size();i++) {
+			m=orders.get(i);
+			System.out.println(i+"******="+m.toString());
+		}
+		String jsonString = JSON.toJSONString(cla);
+		System.out.println("******="+jsonString);
+		session.close();
+	}
+
+	//多对多关系
+	@Test
+	public void queryCourseByOrderId() {
+		MybatisOrderMapper mapper = session.getMapper(MybatisOrderMapper.class);
+		
+		//sqlsession底层其实是一个Hashmap,参数是key,内容是value
+		MybatisOrder ordAndCourse = mapper.queryOrderAndCourse(100001);
+		List<MybatisCourse> courses = ordAndCourse.getCourses();
+		for(MybatisCourse c:courses) {
+			System.out.println("******="+c);
+		}
+		String jsonString = JSON.toJSONString(ordAndCourse);
+		System.out.println("******="+jsonString);
+		session.close();
+	}
 }

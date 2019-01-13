@@ -1,6 +1,7 @@
 package com.syf.study.bean;
 
 import java.util.Date;
+import java.util.List;
 
 public class MybatisStudent {
 	private Integer id;
@@ -9,10 +10,12 @@ public class MybatisStudent {
 	private Integer sex;
 	private Date createDate;
 	private Date updateDate;
-	private MybatisClass mybatisClass;
 	private Integer createBy;
 	private Integer updateBy;
-	
+	//一对一，一学生对一班级
+	private MybatisClass mybatisClass;
+	//一对多，一学生对多订单
+	private List<MybatisOrder> mybatisOrders;
 	
 	public Date getCreateDate() {
 		return createDate;
@@ -68,12 +71,21 @@ public class MybatisStudent {
 	public void setMybatisClass(MybatisClass mybatisClass) {
 		this.mybatisClass = mybatisClass;
 	}
+	public List<MybatisOrder> getMybatisOrders() {
+		return mybatisOrders;
+	}
+	public void setMybatisOrders(List<MybatisOrder> mybatisOrders) {
+		this.mybatisOrders = mybatisOrders;
+	}
 	@Override
 	public String toString() {
 		return "MybatisStudent [id=" + id + ", name=" + name + ", age=" + age + ", sex=" + sex + ", createDate="
-				+ createDate + ", updateDate=" + updateDate + ", mybatisClass=" + mybatisClass + ", createBy="
-				+ createBy + ", updateBy=" + updateBy + "]";
+				+ createDate + ", updateDate=" + updateDate + ", createBy=" + createBy + ", updateBy=" + updateBy
+				+ ", mybatisClass=" + mybatisClass + ", mybatisOrders=" + mybatisOrders + "]";
 	}
+	
+	
+
 	
 	
 

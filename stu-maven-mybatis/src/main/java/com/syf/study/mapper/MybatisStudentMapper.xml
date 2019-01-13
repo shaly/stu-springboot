@@ -5,7 +5,6 @@
 
 	<resultMap type="MybatisStudent" id="baseMap">
 		<id column="id" property="id"/>
-		<result column="" property="id"/>
 		<result column="create_date" property="createDate"/>
 		<result column="create_by" property="createBy"/>
 		<result column="update_date" property="updateDate"/>
@@ -46,4 +45,23 @@
 		<include refid="baseColm"></include>
 		 from mybatis_student where classid=#{classid}
 	</select>
+	
+	
+	<!-- 一对多，一学生，多订单 -->
+	<resultMap type="MybatisStudent" id="userOrdersMap">
+		<id column="id" property="id"/>
+		<result column="" property="id"/>
+		<result column="create_date" property="createDate"/>
+		<result column="create_by" property="createBy"/>
+		<result column="update_date" property="updateDate"/>
+		<result column="update_by" property="updateBy"/>
+		<!-- 一对多 -->
+		<collection property="mybatisOrders" column="id" ofType="MybatisOrder" select="com.syf.study.mapper.MybatisOrderMapper.queryOrdersByUserId"  fetchType="lazy">
+		</collection>
+	</resultMap>
+	<!-- 查询学生和订单 -->
+	<select id="queryUserOrdersByUserId" parameterType="java.lang.Integer" resultMap="userOrdersMap">
+		select * from mybatis_student where id=#{userId}
+	</select>
+	
 </mapper>

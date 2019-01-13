@@ -13,5 +13,6 @@ public interface MybatisStudentMapper {
 
 	public List<MybatisStudent> queryAll();
 	public MybatisStudent queryByClassId(@Param("classid") Integer classid);
-
+	public MybatisStudent queryUserOrdersByUserId(@Param("userId") Integer userId);
+	
 }

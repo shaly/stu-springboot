@@ -13,7 +13,7 @@
 	
 	<resultMap type="MybatisClass" id="baseMap">
 	<id column="id" property="id"/>
-	<!-- 建立一对多关系 -->
+	<!--  建立一对多关系:class一student多 id是mybatis_class表的id-->
 	 <collection property="users" column="id" ofType="MybatisStudent" select="com.syf.study.mapper.MybatisStudentMapper.queryByClassId"></collection>
 	</resultMap>
 </mapper>
