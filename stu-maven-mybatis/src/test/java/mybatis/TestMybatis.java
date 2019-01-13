@@ -621,4 +621,71 @@ public class TestMybatis {
 			logger.info("*** 返回结果 ***:"+user.toString());
 		}
 	}
+	//========================构造方式
+	//查询
+	@Test
+	public void queryWithProvider() {
+		User user=new User();
+		user.setAge(25);
+		user.setName("缓存测试");
+		user.setCreateBy(1);
+		AnnotationUserMapper mapper = session.getMapper(AnnotationUserMapper.class);
+		List<User> list = mapper.queryWithProvider(user);
+		
+		for (User u : list) {
+			logger.info("*** 返回结果 ***:"+u.toString());
+		}
+		
+		logger.info("**********************************");
+		User queryWithProviderId = mapper.queryWithProviderId(1000000001);
+
+		logger.info("****queryWithProviderId"+queryWithProviderId.toString());
+		
+		
+	}
+	//新增
+	@Test
+	public void addWithProvider() {
+		User user=new User();
+		user.setAge(25);
+		user.setName("*addWithProvider");
+		user.setBirthday(new Date());
+		user.setCreateTime(new Date());
+		user.setCreateBy(8765432);
+		user.setUpdateBy(9876543);
+		user.setUpdateTime(new Date());
+		AnnotationUserMapper mapper = session.getMapper(AnnotationUserMapper.class);
+		int count=mapper.addWithProvider(user);
+		session.commit();
+		System.out.println("**********影响行数："+count);
+		System.out.println("**********返回ID："+user.getId());
+	}
+	//修改
+	@Test
+	public void updateWithProvider() {
+		User user=new User();
+		user.setId(1000000049);
+		user.setAge(25);
+		user.setName("updateWithProvider");
+		user.setBirthday(new Date());
+		user.setCreateTime(new Date());
+		user.setCreateBy(8765432);
+		user.setUpdateBy(9876543);
+		user.setUpdateTime(new Date());
+		AnnotationUserMapper mapper = session.getMapper(AnnotationUserMapper.class);
+		int count=mapper.updateWithProvider(user);
+		session.commit();
+		System.out.println("**********影响行数："+count);
+		
+	}
+	//删除
+	@Test
+	public void delWithProvider() {
+		AnnotationUserMapper mapper = session.getMapper(AnnotationUserMapper.class);
+		int count=mapper.delWithProvider(1000000058);
+		session.commit();
+		System.out.println("**********影响行数："+count);
+		
+	}
+	
 }

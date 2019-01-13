@@ -7,13 +7,17 @@ import java.util.Map;
 import javax.swing.text.AbstractDocument.Content;
 
 import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.DeleteProvider;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.UpdateProvider;
 
 import com.syf.study.bean.User;
 
@@ -43,4 +47,31 @@ public interface AnnotationUserMapper {
 	
 	@Select("select id,name, age, birthday, createtime, updatetime, createby, updateby from user where id=#{id}")
 	User queryByPrimaryKey(Integer id);
+	
+	
+	
+
+	@SelectProvider(type=AnnotationUserProvider.class,method="selectWithUserParams")
+	List<User> queryWithProvider(User u);
+
+	@SelectProvider(type=AnnotationUserProvider.class,method="queryWithProviderId")
+	@Results(
+		{
+			@Result(id=true,column="id",property="id"),
+			@Result(column="name",property="name")
+		}
+	)
+	User queryWithProviderId(@Param("userId")Integer id);
+	
+
+	@InsertProvider(type=AnnotationUserProvider.class,method="addWithProvider")
+	@Options(useGeneratedKeys=true,keyColumn="id" ,keyProperty="id")
+	int addWithProvider(User u);
+
+	@UpdateProvider(type=AnnotationUserProvider.class,method="updateWithProvider")
+	int updateWithProvider(User u);
+	
+
+	@DeleteProvider(type=AnnotationUserProvider.class,method="delWithProvider")
+	int delWithProvider(Integer id);
 }

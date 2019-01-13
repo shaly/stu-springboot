@@ -15,21 +15,6 @@ public class User implements Serializable{
 	private Integer updateBy;
 	private Integer startNo;
 	private Integer endNo;
-	
-	
-	
-	public Integer getStartNo() {
-		return startNo;
-	}
-	public void setStartNo(Integer startNo) {
-		this.startNo = startNo;
-	}
-	public Integer getEndNo() {
-		return endNo;
-	}
-	public void setEndNo(Integer endNo) {
-		this.endNo = endNo;
-	}
 	public Integer getId() {
 		return id;
 	}
@@ -78,11 +63,27 @@ public class User implements Serializable{
 	public void setUpdateBy(Integer updateBy) {
 		this.updateBy = updateBy;
 	}
+	public Integer getStartNo() {
+		return startNo;
+	}
+	public void setStartNo(Integer startNo) {
+		this.startNo = startNo;
+	}
+	public Integer getEndNo() {
+		return endNo;
+	}
+	public void setEndNo(Integer endNo) {
+		this.endNo = endNo;
+	}
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", age=" + age + ", birthday=" + birthday + ", createTime="
-				+ createTime + ", updateTime=" + updateTime + ", createBy=" + createBy + ", updateBy=" + updateBy + "]";
+				+ createTime + ", updateTime=" + updateTime + ", createBy=" + createBy + ", updateBy=" + updateBy
+				+ ", startNo=" + startNo + ", endNo=" + endNo + "]";
 	}
+	
+	
+	
 
 	
 }
