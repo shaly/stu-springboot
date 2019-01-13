@@ -13,7 +13,6 @@ public class DruidDataSourceFactory implements DataSourceFactory {
 	//与c3p0一样，值来自<properties resource="db.properties"></properties>
     private Properties props;
 
-    @Override
     public DataSource getDataSource() {
         DruidDataSource dds = new DruidDataSource();
         dds.setDriverClassName(this.props.getProperty("driver"));
@@ -31,7 +30,6 @@ public class DruidDataSourceFactory implements DataSourceFactory {
         return dds;
     }
 
-    @Override
     public void setProperties(Properties props) {
         this.props = props;
     }

@@ -8,7 +8,6 @@
 	<resultMap type="MybatisCourse" id="baseMap">
 		<result column="create_time" property="createTime"/>
 		<result column="is_delete" property="isDelete"/>
-		<!-- <collection column="id" property="orders" select=""></collection> -->
 	</resultMap>
 	
 	<!-- 多对多的关系是在中间表中查询 -->

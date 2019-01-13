@@ -12,12 +12,10 @@ public class C3P0DataSourceFactory implements DataSourceFactory {
 
 	private Properties props;
 	
-	@Override
 	public void setProperties(Properties props) {
 		this.props = props;
 	}
 	
-	@Override
 	public DataSource getDataSource() {
 		try {
 			ComboPooledDataSource dataSource = new ComboPooledDataSource();

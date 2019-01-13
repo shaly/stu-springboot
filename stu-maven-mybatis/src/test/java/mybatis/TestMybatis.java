@@ -30,6 +30,7 @@ import com.syf.study.bean.MybatisOrder;
 import com.syf.study.bean.MybatisStudent;
 import com.syf.study.bean.TestUser;
 import com.syf.study.bean.User;
+import com.syf.study.mapper.AnnotationUserMapper;
 import com.syf.study.mapper.CarMapper;
 import com.syf.study.mapper.MybatisClassMapper;
 import com.syf.study.mapper.MybatisCourseMapper;
@@ -543,5 +544,81 @@ public class TestMybatis {
 		String jsonString = JSON.toJSONString(ordAndCourse);
 		System.out.println("******="+jsonString);
 		session.close();
+	}
+	//映射关系总结【最好少用】
+	//不好维护，不好理解，影响性能
+	
+
+
+	//=================================================注解查询
+	//查询
+	@Test
+	public void annotationQuery() {
+		AnnotationUserMapper mapper = session.getMapper(AnnotationUserMapper.class);
+		List<User> queryAll = mapper.queryAll();
+		for(User q:queryAll) {
+			System.out.println("******="+q);
+		}
+		String jsonString = JSON.toJSONString(queryAll);
+		System.out.println("******="+jsonString);
+		session.close();
+	}
+	//新增
+	@Test
+	public void annotationAdd() {
+		User user=new User();
+		user.setAge(25);
+		user.setName("333测试测试事务");
+		user.setBirthday(new Date());
+		user.setCreateTime(new Date());
+		user.setCreateBy(1234567890);
+		user.setUpdateBy(9876543);
+		user.setUpdateTime(new Date());
+		AnnotationUserMapper mapper = session.getMapper(AnnotationUserMapper.class);
+		int count = mapper.addUser(user);
+		session.commit();
+		System.out.println("新增返回响应结果："+count);
+		System.out.println("新增返回ID："+user.getId());
+	}
+	//修改
+	@Test
+	public void annotationUp() {
+		User user=new User();
+		user.setId(1000000059);
+		user.setAge(25);
+		user.setName("666测试测试事务");
+		user.setBirthday(new Date());
+		user.setCreateTime(new Date());
+		user.setCreateBy(8765432);
+		user.setUpdateBy(9876543);
+		user.setUpdateTime(new Date());
+		AnnotationUserMapper mapper = session.getMapper(AnnotationUserMapper.class);
+		int count = mapper.updateUser(user);
+		session.commit();
+		System.out.println("修改返回响应结果："+count);
+	}
+	//删除
+	@Test
+	public void annotationDel() {
+		User user=new User();
+		AnnotationUserMapper mapper = session.getMapper(AnnotationUserMapper.class);
+		int count = mapper.deleteUser(1000000059);
+		session.commit();
+		System.out.println("删除返回响应结果："+count);
+	}
+	//查询参数指定列
+	@Test
+	public void annotationContent() {
+		AnnotationUserMapper mapper = session.getMapper(AnnotationUserMapper.class);
+		//5.获取代理mapper对象，执行业务
+		Map<String, String> queryMap=new HashMap<String, String>();
+		queryMap.put("col", "id,name, age, birthday, createtime, updatetime, createby, updateby");
+		queryMap.put("tab", "user");
+		queryMap.put("where1", "name");
+		queryMap.put("param1", "'%tttte%' or 1=1");
+		List<User> listUser = mapper.queryContent(queryMap);
+		for (User user : listUser) {
+			logger.info("*** 返回结果 ***:"+user.toString());
+		}
 	}
 }
