@@ -17,6 +17,16 @@ public class MybatisStudent {
 	//一对多，一学生对多订单
 	private List<MybatisOrder> mybatisOrders;
 	
+	private MybatisIdcard mybatisIdcard;
+	
+	
+	
+	public MybatisIdcard getMybatisIdcard() {
+		return mybatisIdcard;
+	}
+	public void setMybatisIdcard(MybatisIdcard mybatisIdcard) {
+		this.mybatisIdcard = mybatisIdcard;
+	}
 	public Date getCreateDate() {
 		return createDate;
 	}
@@ -81,12 +91,9 @@ public class MybatisStudent {
 	public String toString() {
 		return "MybatisStudent [id=" + id + ", name=" + name + ", age=" + age + ", sex=" + sex + ", createDate="
 				+ createDate + ", updateDate=" + updateDate + ", createBy=" + createBy + ", updateBy=" + updateBy
-				+ ", mybatisClass=" + mybatisClass + ", mybatisOrders=" + mybatisOrders + "]";
+				+ ", mybatisClass=" + mybatisClass + ", mybatisOrders=" + mybatisOrders + ", mybatisIdcard="
+				+ mybatisIdcard + "]";
 	}
-	
-	
-
-	
 	
 
 }

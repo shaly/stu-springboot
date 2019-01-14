@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.DeleteProvider;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.InsertProvider;
+import org.apache.ibatis.annotations.One;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
@@ -18,7 +19,9 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.annotations.UpdateProvider;
+import org.apache.ibatis.mapping.FetchType;
 
+import com.syf.study.bean.MybatisStudent;
 import com.syf.study.bean.User;
 
 public interface AnnotationUserMapper {
@@ -78,4 +81,19 @@ public interface AnnotationUserMapper {
 
 	@DeleteProvider(type=AnnotationUserProvider.class,method="delWithProvider")
 	int delWithProvider(Integer id);
+	
+	//一对一联查
+	@Select("select * from mybatis_student where id=#{id}")
+	@Results({
+		@Result(column="create_date",property="createDate"),
+		@Result(column="create_by",property="createBy"),
+		@Result(column="update_date",property="updateDate"),
+		@Result(column="update_by",property="updateBy"),
+		@Result(column="idcardid" ,property="mybatisIdcard" ,one=@One(
+					select="com.syf.study.mapper.MybatisIdcardMapper.queryById",
+					fetchType=FetchType.EAGER
+				))
+	})
+	MybatisStudent queryByOneToMore(Integer id);
+	
 }

@@ -13,4 +13,6 @@ public interface CarMapper {
 	List<Car> queryUtile(Car car);
 	int update(Car car);
 	List<Car> queryForeach(Car car);
+	
+	
 }

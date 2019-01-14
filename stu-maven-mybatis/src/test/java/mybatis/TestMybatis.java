@@ -703,5 +703,16 @@ public class TestMybatis {
 		System.out.println("**********影响行数："+count);
 		
 	}
-	
+
+	//=======================注解
+	//一对一
+	@Test
+	public void queryByOneToMore() {
+		AnnotationUserMapper mapper = session.getMapper(AnnotationUserMapper.class);
+		MybatisStudent queryByOneToMore = mapper.queryByOneToMore(100001);
+		logger.info("*** 返回结果 ***:"+queryByOneToMore.toString());
+		logger.info("**********************************");
+		
+		
+	}
 }
