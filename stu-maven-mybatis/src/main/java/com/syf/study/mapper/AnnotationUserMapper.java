@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.DeleteProvider;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.InsertProvider;
+import org.apache.ibatis.annotations.Many;
 import org.apache.ibatis.annotations.One;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
@@ -92,8 +93,15 @@ public interface AnnotationUserMapper {
 		@Result(column="idcardid" ,property="mybatisIdcard" ,one=@One(
 					select="com.syf.study.mapper.MybatisIdcardMapper.queryById",
 					fetchType=FetchType.EAGER
+					//fetchType=FetchType.LAZY
+				)),
+		@Result(column="id",property="mybatisOrders",many=@Many(
+				select="com.syf.study.mapper.MybatisOrderMapper.queryOrdersByUserId",
+				fetchType=FetchType.EAGER
+				//fetchType=FetchType.LAZY//设置延迟加载记得要把mybatis-config.xml中设置关闭层级递进查询
+				//<setting name="aggressiveLazyLoading" value="false" />，以免无线查询,忽略层级
 				))
 	})
-	MybatisStudent queryByOneToMore(Integer id);
+	MybatisStudent queryByOneToOneOrMore(Integer id);
 	
 }
