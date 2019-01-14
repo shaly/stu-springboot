@@ -2,7 +2,9 @@ package com.syf.study.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.CacheNamespace;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.cache.decorators.LruCache;
 
 import com.syf.study.bean.MybatisStudent;
 

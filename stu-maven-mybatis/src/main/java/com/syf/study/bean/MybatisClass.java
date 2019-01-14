@@ -1,8 +1,9 @@
 package com.syf.study.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class MybatisClass {
+public class MybatisClass  implements Serializable {
 	private Integer id;
 	private String className;
 	private String desc;

@@ -26,6 +26,7 @@ import com.alibaba.fastjson.support.spring.annotation.FastJsonFilter;
 import com.syf.study.bean.Car;
 import com.syf.study.bean.MybatisClass;
 import com.syf.study.bean.MybatisCourse;
+import com.syf.study.bean.MybatisIdcard;
 import com.syf.study.bean.MybatisOrder;
 import com.syf.study.bean.MybatisStudent;
 import com.syf.study.bean.TestUser;
@@ -34,6 +35,7 @@ import com.syf.study.mapper.AnnotationUserMapper;
 import com.syf.study.mapper.CarMapper;
 import com.syf.study.mapper.MybatisClassMapper;
 import com.syf.study.mapper.MybatisCourseMapper;
+import com.syf.study.mapper.MybatisIdcardMapper;
 import com.syf.study.mapper.MybatisOrderMapper;
 import com.syf.study.mapper.MybatisStudentMapper;
 import com.syf.study.mapper.UserMapper;
@@ -51,13 +53,13 @@ public class TestMybatis {
 		//2.初始化sqlsessionFactory对象
 		sessionFactory = new SqlSessionFactoryBuilder().build(resourceAsStream);
 		//3.获取sqlsession会话对象
-		session = sessionFactory.openSession();
+		//session = sessionFactory.openSession();
 	}
 
 	@After
 	public void after() {
 		//6关闭session
-		session.close();
+		//session.close();
 	}
 
 //==================================== 底层操作方式 ====================================
@@ -720,5 +722,25 @@ public class TestMybatis {
 		MybatisStudent queryByOneToMore = mapper.queryByOneToOneOrMore(100001);
 		logger.info("*** 返回结果 ***:"+queryByOneToMore.toString());
 		logger.info("**********************************");
+	}
+	//====================二级缓存
+
+	//注解二级缓存,不知道为啥没
+	@Test
+	public void sencondCach()  {
+		
+		SqlSession s1=sessionFactory.openSession();
+		MybatisIdcardMapper mapper1 = s1.getMapper(MybatisIdcardMapper.class);
+		MybatisIdcard queryByOneToMore1 = mapper1.queryById(100001);
+		logger.info("*** 返回结果1 ***:"+queryByOneToMore1.toString());
+		logger.info("**********************************");
+		s1.close();
+
+		SqlSession s2=sessionFactory.openSession();
+		MybatisIdcardMapper mapper2 = s2.getMapper(MybatisIdcardMapper.class);
+		MybatisIdcard queryByOneToMore2 = mapper2.queryById(100001);
+		logger.info("*** 返回结果2 ***:"+queryByOneToMore2.toString());
+		logger.info("**********************************");
+		s2.close();
 	}
 }

@@ -1,9 +1,10 @@
 package com.syf.study.bean;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class MybatisStudent {
+public class MybatisStudent implements Serializable {
 	private Integer id;
 	private String name;
 	private Integer age;

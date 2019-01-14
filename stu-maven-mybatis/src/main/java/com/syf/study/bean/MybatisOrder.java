@@ -1,9 +1,10 @@
 package com.syf.study.bean;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class MybatisOrder {
+public class MybatisOrder  implements Serializable {
 	private Integer id;
 	private String orderNumber;
 	private Date creatDate;
