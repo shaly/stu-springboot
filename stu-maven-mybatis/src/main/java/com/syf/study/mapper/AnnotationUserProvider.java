@@ -1,5 +1,7 @@
 package com.syf.study.mapper;
 
+import java.util.Map;
+
 import org.apache.ibatis.jdbc.SQL;
 
 import com.syf.study.bean.User;
@@ -27,7 +29,20 @@ public class AnnotationUserProvider {
 			}
 		}.toString();
 	}
-	
+
+	public String addWithProviderMap(Map<String, Object> m) {
+		return new SQL() {
+			{
+				INSERT_INTO("user");
+				VALUES("name","#{name}");
+				VALUES("age","#{age}");
+				VALUES("createTime","#{createTime}");
+				VALUES("updateTime","#{updateTime}");
+				VALUES("createBy","#{createBy}");
+				VALUES("updateBy","#{updateBy}");
+			}
+		}.toString();
+	}
 	
 	public String addWithProvider(User u) {
 		return new SQL() {

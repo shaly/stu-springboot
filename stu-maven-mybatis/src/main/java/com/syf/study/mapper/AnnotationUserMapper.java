@@ -67,6 +67,10 @@ public interface AnnotationUserMapper {
 	@InsertProvider(type=AnnotationUserProvider.class,method="addWithProvider")
 	@Options(useGeneratedKeys=true,keyColumn="id" ,keyProperty="id")
 	int addWithProvider(User u);
+	
+	@InsertProvider(type=AnnotationUserProvider.class,method="addWithProviderMap")
+	@Options(useGeneratedKeys=true,keyColumn="id" ,keyProperty="id")
+	int addWithProviderMap(Map<String , Object> m);
 
 	@UpdateProvider(type=AnnotationUserProvider.class,method="updateWithProvider")
 	int updateWithProvider(User u);

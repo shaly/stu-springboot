@@ -660,6 +660,22 @@ public class TestMybatis {
 		System.out.println("**********影响行数："+count);
 		System.out.println("**********返回ID："+user.getId());
 	}
+	//Map新增
+	@Test
+	public void addWithProviderMap() {
+		Map<String , Object> map=new HashMap<String, Object>();
+		map.put("age", 25);
+		map.put("name", "addWithProviderMap");
+		map.put("birthday", new Date());
+		map.put("createTime", new Date());
+		map.put("createBy", 22222);
+		map.put("updateBy", 22222);
+		map.put("updateTime", new Date());
+		AnnotationUserMapper mapper = session.getMapper(AnnotationUserMapper.class);
+		int count=mapper.addWithProviderMap(map);
+		session.commit();
+		System.out.println("**********影响行数："+count);
+	}
 	//修改
 	@Test
 	public void updateWithProvider() {
